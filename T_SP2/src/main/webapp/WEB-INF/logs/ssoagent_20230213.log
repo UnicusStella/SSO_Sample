@@ -1,0 +1,11 @@
+[DEBUG][10:30:01][http-nio-40007-exec-2][com.dreamsecurity.sso.agent.crypto.CryptoApiFactory.getCryptoApi] - ### CryptoAPI class : com.dreamsecurity.sso.agent.crypto.api.JCAOSCryptoApi 
+[DEBUG][10:30:01][http-nio-40007-exec-2][com.dreamsecurity.sso.agent.crypto.api.JCAOSCryptoApi.<clinit>] - ### JCAOSCrypto Initialization 
+[ERROR][10:30:04][http-nio-40007-exec-2][com.dreamsecurity.sso.agent.crypto.SSOCryptoApi.checkJarIntegrity] - ### /C:/Users/stella/Desktop/Sample/.metadata/.plugins/org.eclipse.wst.server.core/tmp2/wtpwebapps/T_SP2/WEB-INF/lib/magicsso-agent-4.0.0.3.jar is not exist. 
+[ERROR][10:30:04][http-nio-40007-exec-2][com.dreamsecurity.sso.agent.crypto.SSOCryptoApi.startSsoIntegrity] - ### Magic SSO Self Test failed. 
+[ERROR][10:30:04][http-nio-40007-exec-2][com.dreamsecurity.sso.agent.crypto.SSOCryptoApi.startSsoIntegrity] - java.lang.Exception: ### magicsso-agent-4.0.0.3.jar Integrity Failure 
+[DEBUG][10:30:04][Thread-2][com.dreamsecurity.sso.agent.ha.MapMonitor.run] - ### Map Monitor Start ... 
+[DEBUG][10:30:21][http-nio-40007-exec-3][com.dreamsecurity.sso.agent.crypto.CryptoApiFactory.getCryptoApi] - ### CryptoAPI class : com.dreamsecurity.sso.agent.crypto.api.JCAOSCryptoApi 
+[DEBUG][10:30:21][http-nio-40007-exec-3][com.dreamsecurity.sso.agent.crypto.api.JCAOSCryptoApi.<clinit>] - ### JCAOSCrypto Initialization 
+[INFO][10:30:23][http-nio-40007-exec-3][com.dreamsecurity.sso.agent.crypto.SSOCryptoApi.startSsoIntegrity] - ### Magic SSO Self Test ... OK 
+[INFO][10:30:23][http-nio-40007-exec-3][com.dreamsecurity.sso.agent.crypto.SSOCryptoApi.startSsoProcess] - ### Magic SSO Process ... OK 
+[DEBUG][10:30:23][Thread-2][com.dreamsecurity.sso.agent.ha.MapMonitor.run] - ### Map Monitor Start ... 

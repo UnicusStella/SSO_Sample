@@ -1,0 +1,160 @@
+10:29:43.075 [localhost-startStop-1] DEBUG c.d.s.s.crypto.CryptoApiFactory - ### CryptoAPI class : com.dreamsecurity.sso.server.crypto.api.JCAOSCryptoApi
+10:29:43.092 [localhost-startStop-1] DEBUG c.d.s.s.crypto.api.JCAOSCryptoApi - ### JCAOSCrypto Initialization
+10:29:47.334 [localhost-startStop-1] DEBUG c.d.s.s.r.RepositoryApiFactory - ### RepositoryAPI class : com.dreamsecurity.sso.server.repository.api.DefaultRepositoryApi
+10:29:48.280 [localhost-startStop-1] DEBUG c.d.s.s.r.connection.DBConnectMap - ### default_db's Connection Pool Create Success [ 940 ms.]
+10:29:48.280 [Thread-1] DEBUG c.d.s.s.r.c.DBConnectMonitor - ### default_db Monitor Start ...
+10:29:48.280 [localhost-startStop-1] INFO  c.d.s.s.r.connection.DBConnectMap - ### DBConnectMap size : 1
+10:29:48.312 [localhost-startStop-1] DEBUG c.d.s.server.provider.EnvironInform - ### T_IDP 임시 라이센스 만료 209일 전
+10:29:48.312 [localhost-startStop-1] DEBUG c.d.s.server.provider.EnvironInform - ### T_SP1 임시 라이센스 만료 209일 전
+10:29:48.313 [localhost-startStop-1] DEBUG c.d.s.server.provider.EnvironInform - ### T_SP2 임시 라이센스 만료 209일 전
+10:29:48.599 [localhost-startStop-1] INFO  c.d.sso.server.crypto.SSOCryptoApi - ### Magic SSO Self Test ... OK
+10:29:48.601 [localhost-startStop-1] INFO  c.d.sso.server.crypto.SSOCryptoApi - ### Magic SSO Process ... OK
+10:30:39.497 [http-nio-40001-exec-3] DEBUG c.d.s.s.p.IdentificationProvider - ### AuthnRequest:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" AssertionConsumerServiceURL="http://sp1.dev.com:40004/sso/Response.jsp" Destination="http://idp.dev.com:40001/sso/Request.jsp" ID="SP-d9dbe27cc3cab45c90d07d71b9d1fc29" IssueInstant="2023-02-13T01:30:39.128Z" ProviderName="T_SP1" Version="2.0">
+    <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" SPProvidedID="T_SP1">T_SP1</saml2:Issuer>
+    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
+            <ds:Reference URI="#SP-d9dbe27cc3cab45c90d07d71b9d1fc29">
+                <ds:Transforms>
+                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                </ds:Transforms>
+                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                <ds:DigestValue>B9dBYWSsRW7J5P+xnvXmy6TS3Jy9Ut68iGZOpW/N05c=</ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>fuWQaSOlfZkKe28tsEt97K3qCixID5M0lKjQEhfcjaoHkjvRneHCAvlwMuJtBhvYVaTOhtHjv7K4LmnLDTdlmjv2MlECRh7pe3w8RP7LoU6dnT2BTwc2Ro6YtU5n9TLOzHoi1PLFriuOQUAbA09pqv/j0EVz4k9px6wK8OvhkSerwJe+MQ5WONxQToMSFG8A4OAjWyll7RZi3lIT5SrfLpPbCblBc3cnSZ6m+RWXXhN4wtN1NDubXx3H4tgw5HfHWUfG2ulzUNP7LYrrsHVNXZKCY7UXhFdV1QEXywzvallgT2F/agPnFMA0V4kFkdWy16U4CK5lkKY+h6/Bjt1BKg==</ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>MIIDrTCCApWgAwIBAgILAOmIrcL+0BuE/C4wDQYJKoZIhvcNAQELBQAwQjELMAkGA1UEBhMCS1Ix
+FjAUBgNVBAoMDURyZWFtU2VjdXJpdHkxDDAKBgNVBAsMA1NTTzENMAsGA1UEAwwEUk9PVDAeFw0y
+MzAxMTEwNjU2MDBaFw0yNDAxMTEwNjU2MDBaMEcxCzAJBgNVBAYTAktSMRYwFAYDVQQKDA1EcmVh
+bVNlY3VyaXR5MQwwCgYDVQQLDANTU08xEjAQBgNVBAMMCVRfSURQX1NpZzCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAI2cBfA7Rl4sIj2rQxlzkLksWax2AKHHzE/z+ZiFXfat9iVMkzm+
++aEEI4kqTl/jX9Hs/jo5sO0ym1NdGqnCUzByK40hwcg2AJjnmrT3Z90LA0cWZuJ3FtcnsMKFTNsF
+r2Uf6qfRmtIATUOMrUitmBpQQw7oM/bfC2Vwy0UQixGQrvMGnSof3t4AfQQEZ6bKAk8mW/CXYN8t
+ROj6/ccq8270QtEDPJDtNxw38nZyvmlPZf7XHibsDJYzg/kSk1MOZS3h/KBmkSVBX7QdaZTZ3nyC
+/iAQo4LvZttpfuK72EXKnWgetEqDDWqnGSYsOZtxPgR25/XutgPqmhB/pH5x0vkCAwEAAaOBnjCB
+mzBqBgNVHSMEYzBhgBQr4Id5CELkfyHiQ9EAxaSJ9EQyhaFGpEQwQjELMAkGA1UEBhMCS1IxFjAU
+BgNVBAoMDURyZWFtU2VjdXJpdHkxDDAKBgNVBAsMA1NTTzENMAsGA1UEAwwEUk9PVIIBATAdBgNV
+HQ4EFgQUOntj8r57S4O5ACiouEv38FWj4I8wDgYDVR0PAQH/BAQDAgbAMA0GCSqGSIb3DQEBCwUA
+A4IBAQCCbzTcwQRCAVpvXS+1yNm1z1H09SeL6Hf0cTt3ZZkL11PS6vDlruWx1zWnWb2Y4IRyBbUZ
+qNlrm3D1cEg1SnznhdXn2OXJOfRRxjGLdqckIYlswHVe7qO9JWSiwDQH3GlRGe5/DiWNSmKbr/eg
+MC4H23anHd9Hkb10JI4bCLvlWOYfKCqO1a2/nMcjJ+ln4BLYgyBwDVtv8oOoXUB3lQUucJ6KvTs5
+h2ONyQC+XVEhu0yMAGu3ELkZ98r83TXRLic+67Af/kF/1sUK6ynoW8D0oobC4VvKV8NovUN7PK+g
+6Dv4I8RQ4GzZbneXrHR4cRh50ozmbtBh1CsfFp4dMK8X</ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+    <saml2:Subject xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">sso</saml2:NameID>
+        <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:sender-vouches">
+            <saml2:SubjectConfirmationData>
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:KeyValue>
+                        <xs:string xmlns:xs="http://www.w3.org/2001/XMLSchema">dHKQSNm6BxBJzbnOiYIoLtxT5993IJeeV3FnbWdsBIIHJa23SC6GupJk8ykCq8QwHqYXNRjRagI7FWZAguCsD6sL9dNCmdhJtnePPo59xEDYuu5v6LJEg0EAb9P4GrvZCAjPCxxguHPjn6hLdJqHceDHyFHniaoDDXitUfKEqZ7pg8Y+ZP6y84vpRvBI/sUXIboK6LJfiQ0YnzHuwA8HnZibuZxJPFPY99vsaJ00hSg3K47e7GoZUbpaR5y5Dj1rXKa7wW447JxXEj4cwjLEq+T06JS8grZr1xt2fqb7FUJ0TmKcTgvdF8sn3yOcqxXbtZ5PCwQhflFy1CPOv7q3QEI4qpuwJC+IJir0zsfPQio=</xs:string>
+                    </ds:KeyValue>
+                    <ds:KeyValue>
+                        <xs:string xmlns:xs="http://www.w3.org/2001/XMLSchema">f/TNawZlCwOYCLk+rUxYHHIpaVArQkEutKpNQYsrY4KBHlOHdaHpvXLzh9TU949mrhAdBa9IbtGsBmrdT7asuQ0stzKLm+h/fbvd8j+J3Z15MkToBEWzACoPgKkp3jCmsi5k9GbSK6YqvJ8MOrwGslRyExx099PIU0HMCD/C3hSB45J49ryxnIFhapBF/0agOkqHvMC15mMaTtxsufNxTd9O2rDGdybqVLAx9+m+sGr/AfeSF0yWEQicMcSEprm6/JsemDacK/FEllCmM/EosES7WQqV+UyveuJJC630cesUXTxXHonymYkFXZHlhOEvHecoumYnmKxL2c1xorZIzg==</xs:string>
+                    </ds:KeyValue>
+                </ds:KeyInfo>
+            </saml2:SubjectConfirmationData>
+        </saml2:SubjectConfirmation>
+    </saml2:Subject>
+    <saml2p:RequestedAuthnContext Comparison="exact">
+        <saml2:AuthnContextClassRef xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml2:AuthnContextClassRef>
+    </saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>
+
+10:30:39.768 [http-nio-40001-exec-3] DEBUG c.d.s.s.p.IdentificationProvider - ### Assertion XML:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<saml2:Assertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" ID="IDP-654980fd6275535f3ab177bc2e619761" IssueInstant="2023-02-13T01:30:39.718Z" Version="2.0">
+    <saml2:Issuer>T_IDP</saml2:Issuer>
+    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
+            <ds:Reference URI="#IDP-654980fd6275535f3ab177bc2e619761">
+                <ds:Transforms>
+                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+                        <ec:InclusiveNamespaces xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="xs"/>
+                    </ds:Transform>
+                </ds:Transforms>
+                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+                <ds:DigestValue>LSoDD/65iMHXvPD5LEmOv4J4aTSu7kjnJ08sxjsmahg=</ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>Jo7iBa8qD2etLgadw9673nkCJXVb5OuAj9PAgaohEpANoRjRBuHjLoUiB1urFwSn4wIGMaNpadjTB9P0Nt5arSHXlUCgw6X5EfQD1Ieckp2pH+wqSlL0qro/pEZ0ZeHOK6cosw5Z9V6vaeemkRdicGVyNr7y2Tr8Ie64MwPfLy3ouU6D5SpwmHVtnS3DAM0EKplcLGs8dDeCufbNECYBV7FGMsiER1p8mqWeNY8E7Jy+wHcfqjKPeNhDHr1R6r+SgPCf9z+UgfnvrgPHfiZ5/E9XDSnjCgAUfUjy7roXfgu/rzr3v1eu2R9uSJY1oVYti3tJPdUmXklkQzBCqL44jg==</ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>MIIDrTCCApWgAwIBAgILAOmIrcL+0BuE/C4wDQYJKoZIhvcNAQELBQAwQjELMAkGA1UEBhMCS1Ix
+FjAUBgNVBAoMDURyZWFtU2VjdXJpdHkxDDAKBgNVBAsMA1NTTzENMAsGA1UEAwwEUk9PVDAeFw0y
+MzAxMTEwNjU2MDBaFw0yNDAxMTEwNjU2MDBaMEcxCzAJBgNVBAYTAktSMRYwFAYDVQQKDA1EcmVh
+bVNlY3VyaXR5MQwwCgYDVQQLDANTU08xEjAQBgNVBAMMCVRfSURQX1NpZzCCASIwDQYJKoZIhvcN
+AQEBBQADggEPADCCAQoCggEBAI2cBfA7Rl4sIj2rQxlzkLksWax2AKHHzE/z+ZiFXfat9iVMkzm+
++aEEI4kqTl/jX9Hs/jo5sO0ym1NdGqnCUzByK40hwcg2AJjnmrT3Z90LA0cWZuJ3FtcnsMKFTNsF
+r2Uf6qfRmtIATUOMrUitmBpQQw7oM/bfC2Vwy0UQixGQrvMGnSof3t4AfQQEZ6bKAk8mW/CXYN8t
+ROj6/ccq8270QtEDPJDtNxw38nZyvmlPZf7XHibsDJYzg/kSk1MOZS3h/KBmkSVBX7QdaZTZ3nyC
+/iAQo4LvZttpfuK72EXKnWgetEqDDWqnGSYsOZtxPgR25/XutgPqmhB/pH5x0vkCAwEAAaOBnjCB
+mzBqBgNVHSMEYzBhgBQr4Id5CELkfyHiQ9EAxaSJ9EQyhaFGpEQwQjELMAkGA1UEBhMCS1IxFjAU
+BgNVBAoMDURyZWFtU2VjdXJpdHkxDDAKBgNVBAsMA1NTTzENMAsGA1UEAwwEUk9PVIIBATAdBgNV
+HQ4EFgQUOntj8r57S4O5ACiouEv38FWj4I8wDgYDVR0PAQH/BAQDAgbAMA0GCSqGSIb3DQEBCwUA
+A4IBAQCCbzTcwQRCAVpvXS+1yNm1z1H09SeL6Hf0cTt3ZZkL11PS6vDlruWx1zWnWb2Y4IRyBbUZ
+qNlrm3D1cEg1SnznhdXn2OXJOfRRxjGLdqckIYlswHVe7qO9JWSiwDQH3GlRGe5/DiWNSmKbr/eg
+MC4H23anHd9Hkb10JI4bCLvlWOYfKCqO1a2/nMcjJ+ln4BLYgyBwDVtv8oOoXUB3lQUucJ6KvTs5
+h2ONyQC+XVEhu0yMAGu3ELkZ98r83TXRLic+67Af/kF/1sUK6ynoW8D0oobC4VvKV8NovUN7PK+g
+6Dv4I8RQ4GzZbneXrHR4cRh50ozmbtBh1CsfFp4dMK8X</ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+    <saml2:Subject>
+        <saml2:NameID Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">sso</saml2:NameID>
+        <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+            <saml2:SubjectConfirmationData InResponseTo="SP-d9dbe27cc3cab45c90d07d71b9d1fc29"/>
+        </saml2:SubjectConfirmation>
+    </saml2:Subject>
+    <saml2:Conditions NotBefore="2023-02-12T01:30:39.718Z" NotOnOrAfter="2023-02-14T01:30:39.718Z"/>
+    <saml2:AuthnStatement AuthnInstant="2023-02-13T01:30:39.128Z">
+        <saml2:AuthnContext>
+            <saml2:AuthnContextClassRef>urn:oasis:names:tc:SAML:2.0:ac:classes:Password</saml2:AuthnContextClassRef>
+        </saml2:AuthnContext>
+    </saml2:AuthnStatement>
+    <saml2:AttributeStatement>
+        <saml2:Attribute Name="AUTHN_INFO">
+            <saml2:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">eyJ4dG0iOiIyMDIzLTAyLTEzVDAxOjMwOjM5LjcxOCIsInhpZCI6IklEUC02NTQ5ODBmZDYyNzU1MzVmM2FiMTc3YmMyZTYxOTc2MSIsImlkcHNlc3Npb24iOiJEOEVFODVGNTcyOTY3QzlGOTQ3QjdGNDlDQjM4OUU1MyIsInRva2VuIjoiW1VTRVJdXG5QV19DSEFOR0VfV0FSTj03XG5OT1RfQUZURVI9MjAyMzAyMTMxMTMwMzlcbk5PV19MT0dJTl9JUD0xMjcuMC4wLjFcblNFU1NJT05fVElNRT0xMFxuTk9XX0xPR0lOX1RJTUU9MjAyMzAyMTMxMDMwMzlcbk5BTUU97ZmN6ri464+ZXG5QV19WQUxJREFURT05MFxuUE9MTElOR19USU1FPTMwXG5MT0dJTl9UWVBFPUlEX1BXXG5MQVNUX0xPR0lOX1RJTUU9MjAyMzAyMTMxMDMwMzlcblBXX01JU01BVENIX0FMTE9XPTVcblBXX1VQREFURV9EQVlTPTE5NlxuVElNRVNUQU1QPTIwMjMwMjEzMTAzMDM5NjI2XG5MQVNUX0xPR0lOX0lQPVxuSUQ9c3NvXG5cbltBUFBMREVGQVVMVF0ifQ==</saml2:AttributeValue>
+        </saml2:Attribute>
+    </saml2:AttributeStatement>
+</saml2:Assertion>
+
+10:30:39.790 [http-nio-40001-exec-3] DEBUG c.d.s.s.p.IdentificationProvider - ### samlResponse XML:
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" ID="IDP-654980fd6275535f3ab177bc2e619761" InResponseTo="SP-d9dbe27cc3cab45c90d07d71b9d1fc29" IssueInstant="2023-02-13T01:30:39.718Z" Version="2.0">
+    <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">T_IDP</saml2:Issuer>
+    <saml2p:Status>
+        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+    </saml2p:Status>
+    <saml2:EncryptedAssertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+            <md:EncryptionMethod xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" Algorithm="SEED"/>
+            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <xenc:EncryptedKey>
+                    <md:EncryptionMethod xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"/>
+                    <xenc:CipherData>
+                        <xenc:CipherValue>ZZIFFa0smaHljgvaSG1fib96NiC/Pm30S5yBnt07cGC5JdoWhK9KvO84Tb0FNMHFbVfde1l01ZIY7KobfFep6HKQxbRy1jeN/uuWa6G7XcSRStyD/9E91IxLPrYA7XbS8CUwNcMZWAjfqZdHi0aRd2d1JFdF4ecHE7T4hklykwRv5STGlbudRnur0xg+PQVSCA0eGdrFZhX9fMShKp3XvLo6zcugMROu1taRouap9rSQlP0tQTI183XIpUYc0r7jXaVRTC9a5KxCnsS7MxmzcEEz8zWpKKwqb1dRiPGDppJwGnvFYdlGfj0cgl8iaH9jOO/5zd1mqi/kB255Gpd4nA==</xenc:CipherValue>
+                    </xenc:CipherData>
+                </xenc:EncryptedKey>
+            </ds:KeyInfo>
+            <xenc:CipherData>
+                <xenc:CipherValue>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</xenc:CipherValue>
+            </xenc:CipherData>
+        </xenc:EncryptedData>
+    </saml2:EncryptedAssertion>
+</saml2p:Response>
+
+10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### connect info: 192.168.0.10, 40040, 3000, 512
+10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### connect error: java.net.SocketTimeoutException: connect timed out
+10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### DupManager.doprocess() Exception: java.io.IOException: server connect failed
