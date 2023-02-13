@@ -1,0 +1,69 @@
+
+table#side_box {
+	width: 100%;
+	height: 100%;
+}
+table#side_box td#side_left {
+	width: 50%;
+	padding-right: 15px;
+	vertical-align: top;
+}
+table#side_box td#side_right {
+	width: 50%;
+	padding-left: 15px;
+	vertical-align: top;
+}
+
+table#info {
+	width: 100%;
+	border-top: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
+	table-layout: fixed;
+}
+table#info tr td {
+	padding: 0px;
+	spacing: 0px;
+	text-align: left;
+	vertical-align: middle;
+}
+table#info tr {
+	height: 31px;
+}
+table#info td {
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid #ddd;
+}
+table#info td.tdlast {
+	border-bottom: 1px solid #bbb;
+}
+table#info td#colnm {
+	background-color: #f8f8f8;
+	padding-left: 10px;
+	font-weight: 600;
+}
+table#info td#coldata {
+	padding-left: 10px;
+}
+
+.basic_input {
+	background-color: #f8f8f8;
+	border: 1px solid #cbcbcb;
+	color: #333333;
+	height: 22px;
+	border-radius: 0;
+	padding: 0px 0px 0px 8px;
+	margin: 0;
+	vertical-align: top;
+	white-space: nowrap;
+	display: inline-block;
+	text-decoration: none;
+	overflow: visible;
+}
+.menu_role {
+	width: 100%;
+	height: 359px;
+	border: 0;
+	overflow: auto;
+	padding-top: 5px;
+}

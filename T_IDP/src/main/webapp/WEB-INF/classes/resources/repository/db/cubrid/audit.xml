@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- Cubrid -->
+<sqlMap namespace="audit">
+
+	<cacheModel id="dataCache" type="LRU">
+		<flushInterval hours="24"/>
+		<property name="size" value="1000"/>
+	</cacheModel>
+
+	<select id="getStatusAudit" parameterClass="map" resultClass="hashMap">
+		SELECT
+				MAX(B.WARN_LIMIT) AS WARN_LIMIT,
+				MAX(B.VERIFY_CYCLE) AS VERIFY_CYCLE,
+				MAX(B.VERIFY_POINT) AS VERIFY_POINT,
+				MAX(B.VERIFY_TIME) AS VERIFY_TIME,
+				TO_CHAR(MAX(B.USED_RATE)) AS USED_RATE
+		FROM   (
+				SELECT '1' TS, WARN_LIMIT,
+				       VERIFY_CYCLE, VERIFY_POINT, TO_CHAR(NVL(VERIFY_TIME,SYSDATETIME-86400000),'YYYYMMDDHH24MI') VERIFY_TIME, 0 AS USED_RATE
+				FROM   SSO_AUPY
+				WHERE  CODE = 'AUPY0001'
+				UNION
+				SELECT '1' TS, '' WARN_LIMIT, '' VERIFY_CYCLE, '' VERIFY_POINT, '' VERIFY_TIME, 10 AS USED_RATE
+				FROM   DB_ROOT
+		       ) B
+		GROUP BY B.TS
+	</select>
+
+	<select id="getUsedRateAudit" parameterClass="map" resultClass="hashMap">
+		SELECT '10' AS USED_RATE
+		FROM   DB_ROOT
+	</select>
+
+	<resultMap id="mailServerResult" class="com.dreamsecurity.sso.server.api.audit.vo.MailVO">
+		<result column="SMTP_HOST" property="smtpHost"/>
+		<result column="SMTP_PORT" property="smtpPort"/>
+		<result column="SMTP_CHNL" property="smtpChnl"/>
+		<result column="SMTP_AUTH" property="smtpAuth"/>
+		<result column="AUTH_ID" property="authId"/>
+		<result column="AUTH_PW" property="authPw"/>
+	</resultMap>
+
+	<select id="getMailServer" parameterClass="map" resultMap="mailServerResult">
+		SELECT
+				SMTP_HOST,
+				SMTP_PORT,
+				SMTP_CHNL,
+				SMTP_AUTH,
+				AUTH_ID,
+				AUTH_PW
+		FROM
+				SSO_MSVR
+		WHERE
+				CODE = 'MSVR0001'
+			AND rownum = 1
+	</select>
+
+	<resultMap id="mailSendResult" class="com.dreamsecurity.sso.server.api.audit.vo.MailVO">
+		<result column="REFERRER" property="referrer"/>
+		<result column="SUBJECT" property="subject"/>
+		<result column="BODY" property="content"/>
+	</resultMap>
+
+	<select id="getMailSend" parameterClass="map" resultMap="mailSendResult">
+		SELECT REFERRER,
+		       SUBJECT,
+		       BODY
+		FROM   SSO_MSND
+		WHERE  CODE = #code#
+	</select>
+
+	<resultMap id="aupyInfoResult" class="com.dreamsecurity.sso.server.api.audit.vo.AupyVO">
+		<result column="WARN_LIMIT" property="warnLimit"/>
+		<result column="VERIFY_CYCLE" property="verifyCycle"/>
+		<result column="VERIFY_POINT" property="verifyPoint"/>
+	</resultMap>
+
+	<select id="getAupyInfo" parameterClass="map" resultMap="aupyInfoResult">
+		SELECT WARN_LIMIT,
+		       VERIFY_CYCLE,
+		       VERIFY_POINT
+		FROM   SSO_AUPY
+		WHERE  CODE = 'AUPY0001'
+	</select>
+
+	<select id="countAuditInfo" parameterClass="map" resultClass="hashMap">
+		SELECT COUNT(1) AS CNT
+		FROM   SSO_AULG
+		WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isEqual property="stype" compareValue="00">
+		</isEqual>
+		<isNotEqual property="stype" compareValue="00">
+		AND    CASE_TYPE = #stype#
+		</isNotEqual>
+		<isEqual property="srslt" compareValue="A">
+		</isEqual>
+		<isNotEqual property="srslt" compareValue="A">
+		AND    CASE_RSLT = #srslt#
+		</isNotEqual>
+	</select>
+
+	<resultMap id="auditInfoResult" class="com.dreamsecurity.sso.server.api.audit.vo.AuditListVO">
+		<result column="NUM" property="index"/>
+		<result column="LOG_DATE" property="logDate"/>
+		<result column="LOG_TIME" property="logTime"/>
+		<result column="CASE_USER" property="caseUser"/>
+		<result column="CASE_TYPE" property="caseType"/>
+		<result column="CASE_RSLT" property="caseResult"/>
+		<result column="CASE_DATA" property="caseData"/>
+	</resultMap>
+
+	<select id="getAuditInfo" parameterClass="map" resultMap="auditInfoResult">
+		SELECT NUM, LOG_DATE, LOG_TIME, CASE_USER, CASE_TYPE, CASE_RSLT, CASE_DATA
+		FROM   (
+			SELECT ROWNUM AS NUM, LOG_DATE, LOG_TIME, CASE_USER, CASE_TYPE, CASE_RSLT, CASE_DATA
+			FROM   (
+				SELECT LOG_DATE, LOG_TIME, CASE_USER, CASE_TYPE, CASE_RSLT, CASE_DATA
+				FROM   SSO_AULG
+				WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isEqual property="stype" compareValue="00">
+		</isEqual>
+		<isNotEqual property="stype" compareValue="00">
+				AND    CASE_TYPE = #stype#
+		</isNotEqual>
+		<isEqual property="srslt" compareValue="A">
+		</isEqual>
+		<isNotEqual property="srslt" compareValue="A">
+				AND    CASE_RSLT = #srslt#
+		</isNotEqual>
+				ORDER BY LOG_DATE DESC, LOG_TIME DESC, SEQ DESC
+			)
+		)
+		WHERE  NUM BETWEEN #fnum# AND #tnum#
+	</select>
+
+	<select id="getExcelAuditInfo" parameterClass="map" resultMap="auditInfoResult">
+		SELECT ROWNUM AS NUM, LOG_DATE, LOG_TIME, CASE_USER, CASE_TYPE, CASE_RSLT, CASE_DATA
+		FROM   (
+			SELECT LOG_DATE, LOG_TIME, CASE_USER, CASE_TYPE, CASE_RSLT, CASE_DATA
+			FROM   SSO_AULG
+			WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isEqual property="stype" compareValue="00">
+		</isEqual>
+		<isNotEqual property="stype" compareValue="00">
+			AND    CASE_TYPE = #stype#
+		</isNotEqual>
+		<isEqual property="srslt" compareValue="A">
+		</isEqual>
+		<isNotEqual property="srslt" compareValue="A">
+			AND    CASE_RSLT = #srslt#
+		</isNotEqual>
+			ORDER BY LOG_DATE DESC, LOG_TIME DESC, SEQ DESC
+		)
+	</select>
+
+	<resultMap id="statsAccessInfo" class="com.dreamsecurity.sso.server.api.audit.vo.StatsVO">
+		<result column="XVAL" property="xvalue"/>
+		<result column="LCNT" property="lcount"/>
+		<result column="CCNT" property="ccount"/>
+		<result column="OCNT" property="ocount"/>
+	</resultMap>
+
+	<select id="getStatsDateAccessInfo" parameterClass="map" resultMap="statsAccessInfo">
+        SELECT T.XVAL, NVL(L.CNT, 0) AS LCNT, NVL(C.CNT, 0) AS CCNT, NVL(O.CNT, 0) AS OCNT
+        FROM   (
+                SELECT '00' AS XVAL FROM DB_ROOT UNION
+                SELECT '01' AS XVAL FROM DB_ROOT UNION
+                SELECT '02' AS XVAL FROM DB_ROOT UNION
+                SELECT '03' AS XVAL FROM DB_ROOT UNION
+                SELECT '04' AS XVAL FROM DB_ROOT UNION
+                SELECT '05' AS XVAL FROM DB_ROOT UNION
+                SELECT '06' AS XVAL FROM DB_ROOT UNION
+                SELECT '07' AS XVAL FROM DB_ROOT UNION
+                SELECT '08' AS XVAL FROM DB_ROOT UNION
+                SELECT '09' AS XVAL FROM DB_ROOT UNION
+                SELECT '10' AS XVAL FROM DB_ROOT UNION
+                SELECT '11' AS XVAL FROM DB_ROOT UNION
+                SELECT '12' AS XVAL FROM DB_ROOT UNION
+                SELECT '13' AS XVAL FROM DB_ROOT UNION
+                SELECT '14' AS XVAL FROM DB_ROOT UNION
+                SELECT '15' AS XVAL FROM DB_ROOT UNION
+                SELECT '16' AS XVAL FROM DB_ROOT UNION
+                SELECT '17' AS XVAL FROM DB_ROOT UNION
+                SELECT '18' AS XVAL FROM DB_ROOT UNION
+                SELECT '19' AS XVAL FROM DB_ROOT UNION
+                SELECT '20' AS XVAL FROM DB_ROOT UNION
+                SELECT '21' AS XVAL FROM DB_ROOT UNION
+                SELECT '22' AS XVAL FROM DB_ROOT UNION
+                SELECT '23' AS XVAL FROM DB_ROOT
+                ) AS T,
+                (
+                SELECT SUBSTR(LOG_TIME,1,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE = #sdate#
+                AND    ACCESS_TYPE IN ('01','02')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_TIME,1,2)
+                ) AS L,
+                (
+                SELECT SUBSTR(LOG_TIME,1,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE = #sdate#
+                AND    ACCESS_TYPE = '99'
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_TIME,1,2)
+                ) AS C,
+                (
+                SELECT SUBSTR(LOG_TIME,1,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE = #sdate#
+                AND    ACCESS_TYPE IN ('11','12')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_TIME,1,2)
+                ) AS O
+        WHERE  T.XVAL = L.XVAL(+)
+        AND    T.XVAL = C.XVAL(+)
+        AND    T.XVAL = O.XVAL(+)
+        ORDER BY T.XVAL
+	</select>
+
+	<select id="getStatsMonthAccessInfo" parameterClass="map" resultMap="statsAccessInfo">
+	<![CDATA[
+        SELECT T.XVAL, NVL(L.CNT, 0) AS LCNT, NVL(C.CNT, 0) AS CCNT, NVL(O.CNT, 0) AS OCNT
+        FROM   (
+                SELECT '01' AS XVAL FROM DB_ROOT UNION
+                SELECT '02' AS XVAL FROM DB_ROOT UNION
+                SELECT '03' AS XVAL FROM DB_ROOT UNION
+                SELECT '04' AS XVAL FROM DB_ROOT UNION
+                SELECT '05' AS XVAL FROM DB_ROOT UNION
+                SELECT '06' AS XVAL FROM DB_ROOT UNION
+                SELECT '07' AS XVAL FROM DB_ROOT UNION
+                SELECT '08' AS XVAL FROM DB_ROOT UNION
+                SELECT '09' AS XVAL FROM DB_ROOT UNION
+                SELECT '10' AS XVAL FROM DB_ROOT UNION
+                SELECT '11' AS XVAL FROM DB_ROOT UNION
+                SELECT '12' AS XVAL FROM DB_ROOT UNION
+                SELECT '13' AS XVAL FROM DB_ROOT UNION
+                SELECT '14' AS XVAL FROM DB_ROOT UNION
+                SELECT '15' AS XVAL FROM DB_ROOT UNION
+                SELECT '16' AS XVAL FROM DB_ROOT UNION
+                SELECT '17' AS XVAL FROM DB_ROOT UNION
+                SELECT '18' AS XVAL FROM DB_ROOT UNION
+                SELECT '19' AS XVAL FROM DB_ROOT UNION
+                SELECT '20' AS XVAL FROM DB_ROOT UNION
+                SELECT '21' AS XVAL FROM DB_ROOT UNION
+                SELECT '22' AS XVAL FROM DB_ROOT UNION
+                SELECT '23' AS XVAL FROM DB_ROOT UNION
+                SELECT '24' AS XVAL FROM DB_ROOT UNION
+                SELECT '25' AS XVAL FROM DB_ROOT UNION
+                SELECT '26' AS XVAL FROM DB_ROOT UNION
+                SELECT '27' AS XVAL FROM DB_ROOT UNION
+                SELECT '28' AS XVAL FROM DB_ROOT UNION
+                SELECT '29' AS XVAL FROM DB_ROOT UNION
+                SELECT '30' AS XVAL FROM DB_ROOT UNION
+                SELECT '31' AS XVAL FROM DB_ROOT
+                ) AS T,
+                (
+                SELECT SUBSTR(LOG_DATE,7,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'01'
+                AND    LOG_DATE <= #sdate#||'31'
+                AND    ACCESS_TYPE IN ('01','02')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,7,2)
+                ) AS L,
+                (
+                SELECT SUBSTR(LOG_DATE,7,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'01'
+                AND    LOG_DATE <= #sdate#||'31'
+                AND    ACCESS_TYPE = '99'
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,7,2)
+                ) AS C,
+                (
+                SELECT SUBSTR(LOG_DATE,7,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'01'
+                AND    LOG_DATE <= #sdate#||'31'
+                AND    ACCESS_TYPE IN ('11','12')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,7,2)
+                ) AS O
+        WHERE  T.XVAL = L.XVAL(+)
+        AND    T.XVAL = C.XVAL(+)
+        AND    T.XVAL = O.XVAL(+)
+        ORDER BY T.XVAL
+    ]]>
+	</select>
+
+	<select id="getStatsYearAccessInfo" parameterClass="map" resultMap="statsAccessInfo">
+	<![CDATA[
+        SELECT T.XVAL, NVL(L.CNT, 0) AS LCNT, NVL(C.CNT, 0) AS CCNT, NVL(O.CNT, 0) AS OCNT
+        FROM   (
+                SELECT '01' AS XVAL FROM DB_ROOT UNION
+                SELECT '02' AS XVAL FROM DB_ROOT UNION
+                SELECT '03' AS XVAL FROM DB_ROOT UNION
+                SELECT '04' AS XVAL FROM DB_ROOT UNION
+                SELECT '05' AS XVAL FROM DB_ROOT UNION
+                SELECT '06' AS XVAL FROM DB_ROOT UNION
+                SELECT '07' AS XVAL FROM DB_ROOT UNION
+                SELECT '08' AS XVAL FROM DB_ROOT UNION
+                SELECT '09' AS XVAL FROM DB_ROOT UNION
+                SELECT '10' AS XVAL FROM DB_ROOT UNION
+                SELECT '11' AS XVAL FROM DB_ROOT UNION
+                SELECT '12' AS XVAL FROM DB_ROOT
+                ) AS T,
+                (
+                SELECT SUBSTR(LOG_DATE,5,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'0101'
+                AND    LOG_DATE <= #sdate#||'1231'
+                AND    ACCESS_TYPE IN ('01','02')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,5,2)
+                ) AS L,
+                (
+                SELECT SUBSTR(LOG_DATE,5,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'0101'
+                AND    LOG_DATE <= #sdate#||'1231'
+                AND    ACCESS_TYPE = '99'
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,5,2)
+                ) AS C,
+                (
+                SELECT SUBSTR(LOG_DATE,5,2) AS XVAL, COUNT(1) AS CNT
+                FROM   SSO_ACLG 
+                WHERE  LOG_DATE >= #sdate#||'0101'
+                AND    LOG_DATE <= #sdate#||'1231'
+                AND    ACCESS_TYPE IN ('11','12')
+                AND    ACCESS_RSLT = '00'
+                GROUP BY SUBSTR(LOG_DATE,5,2)
+                ) AS O
+        WHERE  T.XVAL = L.XVAL(+)
+        AND    T.XVAL = C.XVAL(+)
+        AND    T.XVAL = O.XVAL(+)
+        ORDER BY T.XVAL
+    ]]>
+	</select>
+
+	<insert id="setAccessLog" parameterClass="map">
+		INSERT INTO SSO_ACLG (
+				LOG_DATE,
+				LOG_TIME,
+				SEQ,
+				USER_ID,
+				USER_NAME,
+				ACCESS_IP,
+				ACCESS_BR,
+				ACCESS_SP,
+				ACCESS_TYPE,
+				ACCESS_RSLT
+		)
+		SELECT
+				TO_CHAR(SYSDATETIME, 'YYYYMMDD'),
+				TO_CHAR(SYSDATETIME, 'HH24MISS'),
+				SEQ_SSO_ACLG.nextval,
+				#userId#,
+				NAME,
+				#userIp#,
+				#browser#,
+				#spName#,
+				#loginType#,
+				#result#
+		FROM
+				SSO_USER
+		WHERE
+				ID = #userId#
+			AND rownum = 1
+	</insert>
+
+	<insert id="setAuditLog" parameterClass="map">
+		INSERT INTO SSO_AULG (
+				LOG_DATE,
+				LOG_TIME,
+				SEQ,
+				CASE_USER,
+				CASE_TYPE,
+				CASE_RSLT,
+				CASE_DATA
+		)
+		VALUES (
+				#date#,
+				#time#,
+				SEQ_SSO_AULG.nextval,
+				#user#,
+				#type#,
+				#result#,
+				#detail#
+		)
+	</insert>
+
+	<update id="setAupyInfo" parameterClass="map">
+		UPDATE SSO_AUPY
+		SET    WARN_LIMIT = #warnLimit#,
+		       VERIFY_CYCLE = #verifyCycle#,
+		       VERIFY_POINT = #verifyPoint#
+		WHERE  CODE = 'AUPY0001'
+	</update>
+
+	<update id="setVerifyTimeAupy" parameterClass="map">
+		UPDATE SSO_AUPY
+		SET    VERIFY_TIME = SYSDATETIME
+		WHERE  CODE = 'AUPY0001'
+	</update>
+
+	<update id="setMailServer" parameterClass="map">
+		UPDATE SSO_MSVR
+		SET    SMTP_HOST = #smtpHost#,
+		       SMTP_PORT = #smtpPort#,
+		       SMTP_CHNL = #smtpChnl#,
+		       SMTP_AUTH = #smtpAuth#,
+		       AUTH_ID = #authId#,
+		       AUTH_PW = #authPw#
+		WHERE  CODE = 'MSVR0001'
+	</update>
+
+	<update id="setMailSend" parameterClass="map">
+		UPDATE SSO_MSND
+		SET    REFERRER = #referrer#,
+		       SUBJECT = #subject#,
+		       BODY = #content#
+		WHERE  CODE = #code#
+	</update>
+
+</sqlMap>

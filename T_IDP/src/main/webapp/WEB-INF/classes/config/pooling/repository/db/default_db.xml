@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings
+		cacheModelsEnabled="true"
+		enhancementEnabled="true"
+		lazyLoadingEnabled="true"
+		maxRequests="40"
+		maxSessions="20"
+		maxTransactions="5"
+		useStatementNamespaces="false"
+		/>
+
+	<transactionManager type="JDBC">
+		<dataSource type="DBCP">
+			<property name="driverClassName" value="${dbcp.driver}"/>
+			<property name="url" value="${dbcp.url}"/>
+			<property name="username" value="${dbcp.username}"/>
+			<property name="password" value="${dbcp.password}"/>
+
+			<property name="initialSize" value="5"/>
+			<property name="maxActive" value="30"/>
+			<property name="maxIdle" value="30"/>
+			<property name="maxWait" value="60000"/>
+			<property name="poolPreparedStatements" value="true"/>
+			<property name="maxOpenPreparedStatements" value="10"/>
+			<property name="testOnBorrow" value="true"/>
+			<property name="maximumActiveConnections" value="10"/>
+			<property name="maximumIdleConnections" value="5"/>
+			<property name="maximumWait" value="60000"/>
+			<property name="logAbandoned" value="false"/>
+			<property name="removeAbandoned" value="false"/>
+			<property name="removeAbandonedTimeout" value="50000"/>
+		</dataSource>
+	</transactionManager>
+
+	<!-- JNDI
+	<transactionManager type="JDBC">
+		<dataSource type="JNDI">
+			<property name="DataSource" value="java:/comp/env/jdbc/sso"/>
+		</dataSource>
+	</transactionManager>
+	-->
+
+	<!-- classes path -->
+	<sqlMap resource="resources/repository/db/audit.xml"/>
+	<sqlMap resource="resources/repository/db/user.xml"/>
+	<sqlMap resource="resources/repository/db/admin.xml"/>
+	
+
+	<!-- full path 
+	<sqlMap url="file:///D:/home4/idp/dreamsso/resources/repository/db/audit.xml"/>
+	<sqlMap url="file:///D:/home4/idp/dreamsso/resources/repository/db/user.xml"/>
+	<sqlMap url="file:///D:/home4/idp/dreamsso/resources/repository/db/admin.xml"/>
+	-->
+
+</sqlMapConfig>

@@ -1,0 +1,18 @@
+
+.input_url {
+	position: relative;
+	height: 36px;
+	width: 100%;
+	padding-left: 10px;
+	vertical-align: top;
+	white-space: nowrap;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	overflow: visible;
+	background-color: #fff;
+	color: #333333;
+	border: 0;
+	border-radius: 4px;
+	box-shadow: 0 0 12px rgb(0 0 0 / 15%);
+}

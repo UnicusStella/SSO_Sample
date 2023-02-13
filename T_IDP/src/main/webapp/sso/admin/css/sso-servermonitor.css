@@ -1,0 +1,118 @@
+
+div.btn_submenu {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+.btn_tool {
+    float: left;
+    display: inline-block;
+    width: 28px;
+    height: 30px;
+    line-height: 29px;
+    padding: 0 3px 0 8px;
+    border: 1px solid #1e90ff;
+    cursor: pointer;
+}
+.btn_tool:hover {
+    background: #cae9ff;
+}
+.btn_func_more {
+    display: inline-block;
+    height: 30px;
+    line-height: 29px;
+    padding: 0 4px;
+	border: 1px solid #1e90ff;
+    margin: 0 0 0 -1px;
+    cursor: pointer;
+}
+.btn_func_more:hover {
+    background: #cae9ff;
+}
+span.ic {
+    display: inline-block;
+    background: url(../images/ic.png?v3.2) no-repeat 0 0;
+    vertical-align: middle;
+    margin-right: 0;
+}
+span.ic_refresh {
+	background-position: -100px -1003px;
+    width: 20px;
+    height: 20px;
+}
+span.ic_arrow_type3 {
+    background-position: -100px -490px;
+    width: 9px;
+    height: 20px;
+}
+span.min {
+    display: inline-block;
+    margin: -15px 0 0 -8px;
+    font-family: tahoma;
+    font-size: 11px;
+    color: #888;
+    vertical-align: middle;
+}
+div.array_option {
+    left: initial;
+    position: absolute;
+    top: 32px;
+    min-width: 100px;
+    z-index: 100;
+    border-radius: 4px;
+    box-shadow: 1px 2px 10px rgb(0 0 0 / 40%);
+    background: #fff;
+    margin: 0;
+    padding: 0;
+}
+.array_option ul {
+    background: #fff;
+    border-radius: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.array_option ul.array_type>li {
+    position: relative;
+}
+.array_option ul.array_type>li:hover {
+    cursor: pointer;
+    background-color: #eee;
+    color: #000;
+}
+ul.array_type li {
+    padding: 8px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 13px;
+    margin: 0;
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+ul.array_type li span {
+    vertical-align: middle;
+    font-size: 13px;
+    white-space: nowrap;
+}
+span.txt {
+    display: inline-block;
+}
+.array_option ul.array_type>li span.ic_check {
+    position: absolute;
+    top: 10px;
+    right: 8px;
+}
+ul.array_type li span {
+    vertical-align: middle;
+    font-size: 13px;
+    white-space: nowrap;
+}
+span.ic_check {
+    width: 14px;
+    height: 16px;
+    background-position: -50px -400px;
+}
+.ic_board {
+    background: url(../images/ic_board.png?v3.1.7.2) no-repeat;
+    background-size: 300px 1000px;
+}

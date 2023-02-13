@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pool-config>
+
+	<connection-info>
+		<host>127.0.0.1</host>
+		<port>389</port>
+		<auth-id>AAAAScl5IKCmptfWty9Goyll7TpGUNXJXLq9Osy6waWfJbjDU5gWBbxgf0wuLs3EnjiCsW2tlNIEJMoxdwRqZxkDUTM=</auth-id>  <!-- cn=Manager,dc=my-domain,dc=com -->
+		<auth-password>AAAACNWozlXxojq8BF2gg/zS/j2kZIHvdPXADAJrDQXsNiCshR45+Pgy5/C7jwLK5cTpsw==</auth-password>  <!-- secret -->
+	</connection-info>
+
+	<configuration>
+		<lifo>true</lifo>
+		<maxIdle>10</maxIdle>													<!-- maxIdle : Spare Connection 개수 -->
+		<minIdle>10</minIdle>
+		<maxActive>10</maxActive>												<!-- maxActive : 최대개수 -->
+		<maxWait>2000</maxWait>													<!-- maxWait : 최대 대기 시간 -->
+		<whenExhaustedAction>1</whenExhaustedAction>							<!-- whenExhaustedAction : 0 - Exception 발생, 1 - 가용 Connection 없을 시 대기, 2 - 신규 생성 -->
+		<testOnBorrow>false</testOnBorrow>										<!-- testOnBorrow : Borrow시 Test -->
+		<testOnReturn>false</testOnReturn>										<!-- testOnReturn : Return시 Test -->
+		<testWhileIdle>true</testWhileIdle>										<!-- testWhileIdle : 비활성화 객체를 조사할때 유효성 검사를 할지 여부 -->
+		<timeBetweenEvictionRunsMillis>360000000</timeBetweenEvictionRunsMillis><!-- timeBetweenEvictionRunsMillis : 비활성화 객체 추출 쓰레드의 실행 주기 -->
+		<numTestsPerEvictionRun>3</numTestsPerEvictionRun>						<!-- numTestsPerEvictionRun : 조사할 비활성화 객체 수 -->
+		<minEvictableIdleTimeMillis>50000</minEvictableIdleTimeMillis>			<!-- minEvictableIdleTimeMillis : 객체의 비활성화된 시간이 지정한 시간을 초과한 경우에만 풀에서 추출 -->
+	</configuration>
+
+</pool-config>

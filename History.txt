@@ -1,0 +1,15 @@
+* 23-01-11 *
+
+1. JCAOS 변경(IDP, SP)
+
+환경: OracleJDK1.8 
+OpenJDK와 달리 OracleJDK로 설치시 jcaos1.4.9.6.jar 는 에러 발생! 
+
+※ jcaos 버전이 낮아 생기는 에러로 판단 
+Error: JCE not ~ JCAOS
+
+jcaos1.4.9.6.jar => jcaos-arcCert-1.5.3.5.jar 변경
+
+
+GenerateCert로 만든 인증서는 OracleJDK, OpenJDK 구분없이 둘다 사용가능!
+단! OracleJDK 사용시 jcaos 버전 업

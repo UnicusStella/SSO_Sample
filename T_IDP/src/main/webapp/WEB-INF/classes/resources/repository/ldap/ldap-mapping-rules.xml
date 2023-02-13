@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE digester-rules PUBLIC
+         "-//Jakarta Apache //DTD digester-rules XML V1.0//EN"
+         "digester-rules.dtd">
+
+<digester-rules>
+
+	<object-create-rule pattern="queryMap" classname="com.dreamsecurity.sso.server.repository.ldap.LdapQueryMap"/>
+	<set-properties-rule pattern="queryMap">
+		<alias attr-name="id" prop-name="id"/>
+	</set-properties-rule>
+
+	<pattern value="queryMap/select">
+		<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapSelect"/>
+		<set-properties-rule>
+			<alias attr-name="id" prop-name="id"/>
+			<alias attr-name="parameterClass" prop-name="parameterClass"/>
+			<alias attr-name="resultClass" prop-name="resultClass"/>
+			<alias attr-name="isSubstitute" prop-name="substitute"/>
+		</set-properties-rule>
+
+		<call-method-rule pattern="base" methodname="setBase" paramcount="0"/>
+		<call-method-rule pattern="filter" methodname="setFilter" paramcount="0"/>
+
+		<pattern value="attributes">
+			<object-create-rule classname="java.util.ArrayList"/>
+
+			<pattern value="attribute">
+				<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapQueryAttribute"/>
+				<set-properties-rule>
+					<alias attr-name="alias" prop-name="aliasName"/>
+					<alias attr-name="defaultValue" prop-name="defaultValue"/>
+				</set-properties-rule>
+
+				<call-method-rule methodname="setAttributeName" paramcount="0"/>
+				<set-next-rule methodname="add"/>
+			</pattern>
+
+			<set-next-rule methodname="setAttributeList"/>
+		</pattern>
+<!--
+		<pattern value="attributes">
+			<object-create-rule classname="java.util.ArrayList"/>
+			<call-method-rule pattern="attribute" methodname="add" paramcount="0"/>
+			<set-next-rule methodname="setAttributeList"/>
+		</pattern>
+-->		
+		<call-method-rule pattern="search-scope" methodname="setSearchScope" paramcount="0"/>
+
+		<pattern value="sort">
+			<object-create-rule classname="java.util.ArrayList"/>
+
+			<pattern value="attribute">
+				<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapQueryAttribute"/>
+				<set-properties-rule>
+					<alias attr-name="ascending" prop-name="ascending"/>
+				</set-properties-rule>
+
+				<call-method-rule methodname="setAttributeName" paramcount="0"/>
+				<set-next-rule methodname="add"/>
+			</pattern>
+
+			<set-next-rule methodname="setSortList"/>
+		</pattern>
+
+		<set-next-rule methodname="addSelect"/>
+	</pattern>
+
+	<pattern value="queryMap/insert">
+		<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapInsert"/>
+		<set-properties-rule>
+			<alias attr-name="id" prop-name="id"/>
+			<alias attr-name="parameterClass" prop-name="parameterClass"/>
+			<alias attr-name="isSubstitute" prop-name="substitute"/>
+		</set-properties-rule>
+
+		<call-method-rule pattern="base" methodname="setBase" paramcount="0"/>
+
+		<pattern value="object-classes">
+			<object-create-rule classname="java.util.ArrayList"/>
+			<call-method-rule pattern="object-class" methodname="add" paramcount="0"/>
+			<set-next-rule methodname="setObjectClassList"/>
+		</pattern>
+
+		<pattern value="attributes">
+			<object-create-rule classname="java.util.ArrayList"/>
+
+			<pattern value="attribute">
+				<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapQueryAttribute"/>
+				<set-properties-rule>
+					<alias attr-name="alias" prop-name="aliasName"/>
+					<alias attr-name="defaultValue" prop-name="defaultValue"/>
+				</set-properties-rule>
+
+				<call-method-rule methodname="setAttributeName" paramcount="0"/>
+				<set-next-rule methodname="add"/>
+			</pattern>
+
+			<set-next-rule methodname="setAttributeList"/>
+		</pattern>
+<!--
+		<pattern value="attributes">
+			<object-create-rule classname="java.util.ArrayList"/>
+			<call-method-rule pattern="attribute" methodname="add" paramcount="0"/>
+			<set-next-rule methodname="setAttributeList"/>
+		</pattern>
+-->
+		<set-next-rule methodname="addInsert"/>
+	</pattern>
+
+	<pattern value="queryMap/update">
+		<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapUpdate"/>
+		<set-properties-rule>
+			<alias attr-name="id" prop-name="id"/>
+			<alias attr-name="parameterClass" prop-name="parameterClass"/>
+			<alias attr-name="isSubstitute" prop-name="substitute"/>
+		</set-properties-rule>
+
+		<call-method-rule pattern="base" methodname="setBase" paramcount="0"/>
+
+		<pattern value="attributes">
+			<object-create-rule classname="java.util.ArrayList"/>
+
+			<pattern value="attribute">
+				<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapQueryAttribute"/>
+				<set-properties-rule>
+					<alias attr-name="action" prop-name="modificationType"/>
+					<alias attr-name="alias" prop-name="aliasName"/>
+					<alias attr-name="defaultValue" prop-name="defaultValue"/>
+				</set-properties-rule>
+
+				<call-method-rule methodname="setAttributeName" paramcount="0"/>
+				<set-next-rule methodname="add"/>
+			</pattern>
+
+			<set-next-rule methodname="setAttributeList"/>
+		</pattern>
+
+		<set-next-rule methodname="addUpdate"/>
+	</pattern>
+
+	<pattern value="queryMap/delete">
+		<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.LdapDelete"/>
+		<set-properties-rule>
+			<alias attr-name="id" prop-name="id"/>
+			<alias attr-name="parameterClass" prop-name="parameterClass"/>
+			<alias attr-name="isSubstitute" prop-name="substitute"/>
+		</set-properties-rule>
+
+		<call-method-rule pattern="base" methodname="setBase" paramcount="0"/>
+		<call-method-rule pattern="cascade" methodname="setCascade" paramcount="0" paramtypes="java.lang.Boolean"/>
+
+		<set-next-rule methodname="addDelete"/>
+	</pattern>
+
+</digester-rules>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<queryMap id="user">
+
+	<select id="getUserByID" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute alias="ID">cn</attribute>
+			<attribute alias="NAME">ssoUserName</attribute>
+			<attribute alias="USER_PASSWORD">ssoUserPassword</attribute>
+			<attribute alias="USER_STATUS">ssoUserStatus</attribute>
+			<attribute alias="PW_UPDATE_TIME">ssoPwUpdateTime</attribute>
+			<attribute alias="PW_MISMATCH_COUNT">ssoPwMismatchCount</attribute>
+			<attribute alias="POLICY_CODE">ssoPolicyCode</attribute>
+			<attribute alias="LAST_LOGIN_IP">ssoLastLoginIp</attribute>
+			<attribute alias="LAST_LOGIN_TIME">ssoLastLoginTime</attribute>
+			<attribute alias="NOW_LOGIN_IP">ssoLoginIp</attribute>
+			<attribute alias="NOW_LOGIN_BR">ssoLoginBrowser</attribute>
+			<attribute alias="NOW_LOGIN_TIME">ssoLoginTime</attribute>
+			<attribute alias="ACCESS_TIME">ssoAccessTime</attribute>
+		</attributes>
+		<search-scope>SUB</search-scope>
+	</select>
+
+	<select id="getUserByCert" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(ssoUserDn=#userDn#))</filter>
+		<attributes>
+			<attribute alias="ID">cn</attribute>
+			<attribute alias="NAME">ssoUserName</attribute>
+			<attribute alias="USER_PASSWORD">ssoUserPassword</attribute>
+			<attribute alias="USER_STATUS">ssoUserStatus</attribute>
+			<attribute alias="PW_UPDATE_TIME">ssoPwUpdateTime</attribute>
+			<attribute alias="PW_MISMATCH_COUNT">ssoPwMismatchCount</attribute>
+			<attribute alias="POLICY_CODE">ssoPolicyCode</attribute>
+			<attribute alias="LAST_LOGIN_IP">ssoLastLoginIp</attribute>
+			<attribute alias="LAST_LOGIN_TIME">ssoLastLoginTime</attribute>
+			<attribute alias="NOW_LOGIN_IP">ssoLoginIp</attribute>
+			<attribute alias="NOW_LOGIN_BR">ssoLoginBrowser</attribute>
+			<attribute alias="NOW_LOGIN_TIME">ssoLoginTime</attribute>
+			<attribute alias="ACCESS_TIME">ssoAccessTime</attribute>
+		</attributes>
+	</select>
+
+	<select id="getPolicy" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<base>cn=#code#,ou=userpolicy,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute alias="POLICY_CODE">cn</attribute>
+			<attribute alias="PW_MISMATCH_ALLOW">ssoPwMismatchAllow</attribute>
+			<attribute alias="PW_VALIDATE">ssoPwValidate</attribute>
+			<attribute alias="PW_CHANGE_WARN">ssoPwChangeWarn</attribute>
+			<attribute alias="POLLING_TIME">ssoPollingTime</attribute>
+			<attribute alias="SESSION_TIME">ssoSessionTime</attribute>
+		</attributes>
+		<search-scope>SUB</search-scope>
+	</select>
+
+	<select id="getUserLockedList" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(ssoUserStatus=D))</filter>
+		<attributes>
+			<attribute alias="id">cn</attribute>
+			<attribute alias="name">ssoUserName</attribute>
+			<attribute alias="status">ssoUserStatus</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+		<sort>
+			<attribute ascending="true">ssoUserName</attribute>
+			<attribute ascending="true">cn</attribute>
+		</sort>
+	</select>
+
+	<select id="getUserListById" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(cn=#userId#*))</filter>
+		<attributes>
+			<attribute alias="id">cn</attribute>
+			<attribute alias="name">ssoUserName</attribute>
+			<attribute alias="status">ssoUserStatus</attribute>
+			<attribute alias="logintime">ssoLoginTime</attribute>
+			<attribute alias="loginip">ssoLoginIp</attribute>
+			<attribute alias="loginbr">ssoLoginBrowser</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+		<sort>
+			<attribute ascending="true">cn</attribute>
+			<attribute ascending="true">ssoUserName</attribute>
+		</sort>
+	</select>
+
+	<select id="getUserListByName" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(ssoUserName=#userName#*))</filter>
+		<attributes>
+			<attribute alias="id">cn</attribute>
+			<attribute alias="name">ssoUserName</attribute>
+			<attribute alias="status">ssoUserStatus</attribute>
+			<attribute alias="logintime">ssoLoginTime</attribute>
+			<attribute alias="loginip">ssoLoginIp</attribute>
+			<attribute alias="loginbr">ssoLoginBrowser</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+		<sort>
+			<attribute ascending="true">ssoUserName</attribute>
+			<attribute ascending="true">cn</attribute>
+		</sort>
+	</select>
+
+	<select id="getAllUserList" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(cn=*))</filter>
+		<attributes>
+			<attribute alias="id">cn</attribute>
+			<attribute alias="name">ssoUserName</attribute>
+			<attribute alias="status">ssoUserStatus</attribute>
+			<attribute alias="logintime">ssoLoginTime</attribute>
+			<attribute alias="loginip">ssoLoginIp</attribute>
+			<attribute alias="loginbr">ssoLoginBrowser</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+		<sort>
+			<attribute ascending="true">ssoUserName</attribute>
+			<attribute ascending="true">cn</attribute>
+		</sort>
+	</select>
+
+	<select id="getUserInfo" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<base>ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoUser)(cn=#id#))</filter>
+		<attributes>
+			<attribute alias="id">cn</attribute>
+			<attribute alias="name">ssoUserName</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+	</select>
+
+	<!-- attribute action : ADD/REPLACE/DELETE -->
+	<update id="setPWMismatchCount" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="status">ssoUserStatus</attribute>
+			<attribute action="REPLACE" alias="count">ssoPwMismatchCount</attribute>
+			<attribute action="REPLACE" alias="access">ssoAccessTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="setUserAccessInfo" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="status">ssoUserStatus</attribute>
+			<attribute action="REPLACE" alias="count">ssoPwMismatchCount</attribute>
+			<attribute action="REPLACE" alias="userIp">ssoLastLoginIp</attribute>
+			<attribute action="REPLACE" alias="access">ssoLastLoginTime</attribute>
+			<attribute action="REPLACE" alias="userIp">ssoLoginIp</attribute>
+			<attribute action="REPLACE" alias="userBr">ssoLoginBrowser</attribute>
+			<attribute action="REPLACE" alias="access">ssoLoginTime</attribute>
+			<attribute action="REPLACE" alias="access">ssoAccessTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="clearLoginIP" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="DELETE" alias="userIp">ssoLoginIp</attribute>
+			<attribute action="DELETE" alias="userBr">ssoLoginBrowser</attribute>
+			<attribute action="REPLACE" alias="access">ssoLoginTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="setUserPwd" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="newPwd">ssoUserPassword</attribute>
+			<attribute action="REPLACE" alias="update">ssoPwUpdateTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="setAccessTime" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="access">ssoAccessTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="setUserUnlock" parameterClass="java.util.HashMap">
+		<base>cn=#userId#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="status">ssoUserStatus</attribute>
+			<attribute action="REPLACE" alias="count">ssoPwMismatchCount</attribute>
+			<attribute action="REPLACE" alias="loginIp">ssoLoginIp</attribute>
+			<attribute action="REPLACE" alias="loginBr">ssoLoginBrowser</attribute>
+			<attribute action="REPLACE" alias="loginTime">ssoLoginTime</attribute>
+		</attributes>
+	</update>
+
+	<insert id="createUser" parameterClass="java.util.HashMap">
+		<base>cn=#id#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<object-classes>
+			<object-class>top</object-class>
+			<object-class>ssoUser</object-class>
+		</object-classes>
+		<attributes>
+			<attribute alias="name">ssoUserName</attribute>
+			<attribute alias="pwd">ssoUserPassword</attribute>
+			<attribute alias="update">ssoPwUpdateTime</attribute>
+			<attribute alias="status">ssoUserStatus</attribute>
+			<attribute alias="count">ssoPwMismatchCount</attribute>
+			<attribute alias="code">ssoPolicyCode</attribute>
+		</attributes>
+	</insert>
+
+	<update id="setUser" parameterClass="java.util.HashMap">
+		<base>cn=#id#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="name">ssoUserName</attribute>
+		</attributes>
+	</update>
+
+	<delete id="removeUser" parameterClass="java.util.HashMap">
+		<base>cn=#id#,ou=user,ou=dreamsso,dc=my-domain,dc=com</base>
+	</delete>
+
+</queryMap>

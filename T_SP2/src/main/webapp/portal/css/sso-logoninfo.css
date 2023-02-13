@@ -1,0 +1,7 @@
+table { width:100%; border:1px; }
+table tr { height:40px; }
+table td { padding:.1em; border-bottom:1px solid #ccc; }
+#headkey { width:150px; word-break:break-all; font-size:13px; font-weight:600; padding-left:10px; }
+#headval { word-break:break-all; font-size:14px; font-weight:600; padding-right:10px; }
+#headkey_last { width:150px; word-break:break-all; font-size:14px; font-weight:600; padding-left:10px; border-bottom:0; }
+#headval_last { word-break:break-all; font-size:13px; font-weight:600; padding-right:10px; border-bottom:0; }

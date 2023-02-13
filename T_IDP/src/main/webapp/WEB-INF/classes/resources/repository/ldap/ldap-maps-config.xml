@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<queryMapConfig>
+	<queryMap resource="resources/repository/ldap/admin.xml"/>
+	<queryMap resource="resources/repository/ldap/audit.xml"/>
+	<queryMap resource="resources/repository/ldap/user.xml"/>
+</queryMapConfig>

@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- Oracle -->
+<sqlMap namespace="admin">
+
+	<cacheModel id="dataCache" type="LRU">
+		<flushInterval hours="24"/>
+		<property name="size" value="1000"/>
+	</cacheModel>
+
+	<select id="default_db_connCheck" parameterClass="string" resultClass="string">
+		SELECT 1 FROM DUAL
+	</select>
+
+	<select id="getAdminByID" parameterClass="map" resultClass="hashMap">
+		SELECT
+				A.ID,
+				A.NAME,
+				A.PASSWORD AS PASSWORD,
+				TO_CHAR(A.PW_UPDATE_TIME, 'YYYYMMDDHH24MISS') AS PW_UPDATE_TIME,
+				A.STATUS AS STATUS,
+				A.ADMN_TYPE AS ADMN_TYPE,
+				NVL(A.PW_MISMATCH_COUNT, '0') AS PW_MISMATCH_COUNT,
+				TO_CHAR(NVL(A.ACCESS_TIME, SYSDATE), 'YYYYMMDDHH24MISS') AS ACCESS_TIME,
+				DECODE(NVL(A.LOCK_TIME, ''),'','',TO_CHAR(A.LOCK_TIME,'YYYYMMDDHH24MISS')) AS LOCK_TIME,
+				NVL(A.MENU_CODE, '') AS MENU_CODE,
+				NVL(A.FIRST_YN, '') AS FIRST_YN,
+				NVL(B.PW_MISMATCH_ALLOW, '0') AS PW_MISMATCH_ALLOW,
+				NVL(B.SESSION_TIME, '0') AS SESSION_TIME,
+				NVL(B.LOCK_TIME, '0') AS LOCK_INTERVAL
+		FROM
+				SSO_ADMN A,
+				SSO_ADPY B
+		WHERE
+				A.ID = #id#
+			AND A.ADPY_CODE = B.ADPY_CODE
+			AND rownum = 1
+	</select>
+
+	<resultMap id="adminEmailResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="EMAIL" property="email"/>
+	</resultMap>
+
+	<select id="getAdminEmail" resultMap="adminEmailResult">
+		SELECT EMAIL
+		FROM   SSO_ADMN
+		WHERE  EMAIL IS NOT NULL
+		GROUP BY EMAIL
+	</select>
+
+	<resultMap id="adminIpListResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="IP" property="ip"/>
+	</resultMap>
+
+	<select id="getAdminIpList" resultMap="adminIpListResult">
+		SELECT IP
+		FROM   SSO_ADIP
+		ORDER BY IP
+	</select>
+
+	<resultMap id="usingAdminResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="ID" property="id"/>
+		<result column="LOGIN_IP" property="loginIp"/>
+		<result column="LOGIN_BR" property="loginBr"/>
+		<result column="LOGIN_TIME" property="loginTime"/>
+		<result column="ACCESS_TIME" property="accessTime"/>
+	</resultMap>
+
+	<select id="getUsingAdmin" resultMap="usingAdminResult">
+		SELECT ID,
+		       LOGIN_IP,
+		       LOGIN_BR,
+		       TO_CHAR(LOGIN_TIME, 'YYYYMMDDHH24MISS') AS LOGIN_TIME,
+		       TO_CHAR(ACCESS_TIME, 'YYYYMMDDHH24MISS') AS ACCESS_TIME
+		FROM   SSO_ADMN
+		WHERE  ADMN_TYPE = 'S'
+		AND    USE_YN = 'Y'
+	</select>
+
+	<resultMap id="adminListResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="ADMN_TYPE" property="type"/>
+	</resultMap>
+
+	<select id="getAdminList" resultMap="adminListResult">
+		SELECT ID, NAME, ADMN_TYPE
+		FROM   SSO_ADMN
+		ORDER BY NAME, ID
+	</select>
+
+	<resultMap id="adminInfoResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="ADMN_TYPE" property="type"/>
+		<result column="EMAIL" property="email"/>
+		<result column="MENU_CODE" property="menuCode"/>
+	</resultMap>
+
+	<select id="getAdminInfo" resultMap="adminInfoResult">
+		SELECT ID, NAME, ADMN_TYPE, EMAIL, MENU_CODE
+		FROM   SSO_ADMN
+		WHERE  ID = #id#
+		AND    rownum = 1
+	</select>
+
+	<resultMap id="adpyInfoResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdpyVO">
+		<result column="PW_MISMATCH_ALLOW" property="pwMismatchAllow"/>
+		<result column="LOCK_TIME" property="lockTime"/>
+		<result column="SESSION_TIME" property="sessionTime"/>
+		<result column="IP_MAX_COUNT" property="ipMaxCount"/>
+	</resultMap>
+
+	<select id="getAdpyInfo" parameterClass="map" resultMap="adpyInfoResult">
+		SELECT
+				PW_MISMATCH_ALLOW,
+				LOCK_TIME,
+				SESSION_TIME,
+				IP_MAX_COUNT
+		FROM
+				SSO_ADPY
+		WHERE
+				ADPY_CODE = #code#
+			AND rownum = 1
+	</select>
+
+	<resultMap id="urpyInfoResult" class="com.dreamsecurity.sso.server.api.admin.vo.UrpyVO">
+		<result column="PW_MISMATCH_ALLOW" property="pwMismatchAllow"/>
+		<result column="PW_CHANGE_WARN" property="pwChangeWarn"/>
+		<result column="PW_VALIDATE" property="pwValidate"/>
+		<result column="POLLING_TIME" property="pollingTime"/>
+		<result column="SESSION_TIME" property="sessionTime"/>
+	</resultMap>
+
+	<select id="getUrpyInfo" parameterClass="map" resultMap="urpyInfoResult">
+		SELECT
+				PW_MISMATCH_ALLOW,
+				PW_CHANGE_WARN,
+				PW_VALIDATE,
+				POLLING_TIME,
+				SESSION_TIME
+		FROM
+				SSO_URPY
+		WHERE
+				URPY_CODE = #code#
+			AND rownum = 1
+	</select>
+
+	<select id="countUserList" parameterClass="map" resultClass="hashMap">
+		SELECT COUNT(1) AS CNT
+		FROM   SSO_USER
+	</select>
+
+	<resultMap id="userListResult" class="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+	</resultMap>
+
+	<select id="getUserList" parameterClass="map" resultMap="userListResult">
+		SELECT ID, NAME
+		FROM   (
+			SELECT ROWNUM AS NUM, ID, NAME
+			FROM   (
+				SELECT ID, NAME
+				FROM   SSO_USER
+				ORDER BY NAME, ID
+			)
+		)
+		WHERE  NUM BETWEEN #fnum# AND #tnum#
+	</select>
+
+	<select id="getUserRowByVal" parameterClass="map" resultClass="hashMap">
+		SELECT  NUM
+		FROM   (
+			SELECT ROWNUM AS NUM, ID, NAME
+			FROM   (
+				SELECT ID, NAME
+				FROM   SSO_USER
+				ORDER BY NAME, ID
+			)
+		)
+		WHERE   rownum = 1
+		<isNotEmpty property="userId">
+			AND ID LIKE #userId# || '%'
+		</isNotEmpty>
+		<isNotEmpty property="userName">
+			AND NAME LIKE #userName# || '%'
+		</isNotEmpty>
+	</select>
+
+	<resultMap id="userInfoResult" class="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+	</resultMap>
+
+	<select id="getUserInfo" resultMap="userInfoResult">
+		SELECT ID, NAME
+		FROM   SSO_USER
+		WHERE  ID = #id#
+		AND    rownum = 1
+	</select>
+
+	<select id="countUserAccessInfo" parameterClass="map" resultClass="hashMap">
+		SELECT COUNT(1) AS CNT
+		FROM   SSO_ACLG
+		WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isNotEmpty property="userId">
+			AND USER_ID = #userId#
+		</isNotEmpty>
+		<isEqual property="stype" compareValue="1">
+		</isEqual>
+		<isEqual property="stype" compareValue="2">
+			AND    (ACCESS_TYPE LIKE '0%' OR ACCESS_TYPE = '98')
+		</isEqual>
+		<isEqual property="stype" compareValue="3">
+			AND    ACCESS_TYPE LIKE '1%'
+		</isEqual>
+		<isEqual property="stype" compareValue="4">
+			AND    ACCESS_TYPE = '99'
+		</isEqual>
+		<isEqual property="stype" compareValue="5">
+			AND    ACCESS_RSLT LIKE 'A%'
+		</isEqual>
+	</select>
+
+	<resultMap id="userAccessInfoResult" class="com.dreamsecurity.sso.server.api.admin.vo.UserAccessInfo">
+		<result column="NUM" property="index"/>
+		<result column="LOG_DATE" property="logDate"/>
+		<result column="LOG_TIME" property="logTime"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="ACCESS_IP" property="accessIp"/>
+		<result column="ACCESS_BR" property="accessBr"/>
+		<result column="ACCESS_SP" property="accessSp"/>
+		<result column="ACCESS_TYPE" property="accessType"/>
+		<result column="ACCESS_RSLT" property="accessRslt"/>
+	</resultMap>
+
+	<select id="getUserAccessInfo" parameterClass="map" resultMap="userAccessInfoResult">
+		SELECT NUM, LOG_DATE, LOG_TIME, USER_ID, USER_NAME, ACCESS_IP, ACCESS_BR, ACCESS_SP, ACCESS_TYPE, ACCESS_RSLT
+		FROM   (
+			SELECT ROWNUM AS NUM, LOG_DATE, LOG_TIME, USER_ID, USER_NAME, ACCESS_IP, ACCESS_BR, ACCESS_SP, ACCESS_TYPE, ACCESS_RSLT
+			FROM   (
+				SELECT LOG_DATE, LOG_TIME, USER_ID, USER_NAME, ACCESS_IP, ACCESS_BR, ACCESS_SP, ACCESS_TYPE, ACCESS_RSLT
+				FROM   SSO_ACLG
+				WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isNotEmpty property="userId">
+			AND USER_ID = #userId#
+		</isNotEmpty>
+		<isEqual property="stype" compareValue="1">
+		</isEqual>
+		<isEqual property="stype" compareValue="2">
+			AND    (ACCESS_TYPE LIKE '0%' OR ACCESS_TYPE = '98')
+		</isEqual>
+		<isEqual property="stype" compareValue="3">
+			AND    ACCESS_TYPE LIKE '1%'
+		</isEqual>
+		<isEqual property="stype" compareValue="4">
+			AND    ACCESS_TYPE = '99'
+		</isEqual>
+		<isEqual property="stype" compareValue="5">
+			AND    ACCESS_RSLT LIKE 'A%'
+		</isEqual>
+				ORDER BY LOG_DATE DESC, LOG_TIME DESC, SEQ DESC
+			)
+		)
+		WHERE  NUM BETWEEN #fnum# AND #tnum#
+	</select>
+
+	<select id="getExcelAccessInfo" parameterClass="map" resultMap="userAccessInfoResult">
+		SELECT ROWNUM AS NUM, LOG_DATE, LOG_TIME, USER_ID, USER_NAME, ACCESS_IP, ACCESS_BR, ACCESS_SP, ACCESS_TYPE, ACCESS_RSLT
+		FROM   (
+			SELECT LOG_DATE, LOG_TIME, USER_ID, USER_NAME, ACCESS_IP, ACCESS_BR, ACCESS_SP, ACCESS_TYPE, ACCESS_RSLT
+			FROM   SSO_ACLG
+			WHERE  LOG_DATE BETWEEN #fdate# AND #tdate#
+		<isNotEmpty property="userId">
+			AND USER_ID = #userId#
+		</isNotEmpty>
+		<isEqual property="stype" compareValue="1">
+		</isEqual>
+		<isEqual property="stype" compareValue="2">
+			AND    ACCESS_TYPE LIKE '0%'
+		</isEqual>
+		<isEqual property="stype" compareValue="3">
+			AND    ACCESS_TYPE LIKE '1%'
+		</isEqual>
+		<isEqual property="stype" compareValue="4">
+			AND    ACCESS_TYPE = '99'
+		</isEqual>
+		<isEqual property="stype" compareValue="5">
+			AND    ACCESS_RSLT LIKE 'A%'
+		</isEqual>
+			ORDER BY LOG_DATE DESC, LOG_TIME DESC, SEQ DESC
+		)
+	</select>
+
+	<update id="setAdminStatus" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    STATUS = #status#,
+		       LOCK_TIME = #lockTime#,
+		       ACCESS_TIME = SYSDATE,
+		       PW_MISMATCH_COUNT = '0'
+		WHERE  ID = #id#
+	</update>
+
+	<update id="setAdminPWMismatchCount" parameterClass="map">
+		UPDATE
+				SSO_ADMN
+		SET
+				STATUS = #status#,
+				ACCESS_TIME = SYSDATE,
+				PW_MISMATCH_COUNT = #count#,
+				LOCK_TIME = DECODE(#status#, 'D', SYSDATE, '')
+		WHERE
+				ID = #id#
+	</update>
+
+	<update id="setAdminFirstYn" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    FIRST_YN = '',
+		       ACCESS_TIME = SYSDATE
+		WHERE  ID = #id#
+	</update>
+
+	<update id="setAdminUseYn" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    USE_YN = ''
+	</update>
+
+	<update id="setAdminLoginInfo" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    USE_YN = #use#,
+		       LOGIN_IP = #ip#,
+		       LOGIN_BR = #br#,
+		       LOGIN_TIME = SYSDATE,
+		       ACCESS_TIME = SYSDATE,
+		       PW_MISMATCH_COUNT = '0'
+		WHERE  ID = #id#
+	</update>
+
+	<update id="setAdminLogoutInfo" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    USE_YN = '',
+		       ACCESS_TIME = ''
+		WHERE  ID = #id#
+	</update>
+
+	<update id="setAdminPwd" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    PASSWORD = #newPwd#,
+		       PW_UPDATE_TIME = TO_DATE(#update#, 'YYYYMMDDHH24MISS')
+		WHERE  ID = #id#
+		AND    PASSWORD = #curPwd#
+	</update>
+
+	<insert id="createAdmin" parameterClass="map">
+		INSERT INTO SSO_ADMN (
+				ID,
+				NAME,
+				PASSWORD,
+				PW_UPDATE_TIME,
+				ADMN_TYPE,
+				EMAIL,
+				MENU_CODE,
+				STATUS,
+				PW_MISMATCH_COUNT,
+				ADPY_CODE,
+				FIRST_YN
+		)
+		VALUES (
+				#id#,
+				#name#,
+				#pwd#,
+				TO_DATE(#update#, 'YYYYMMDDHH24MISS'),
+				#type#,
+				#email#,
+				#menucode#,
+				'C',
+				'0',
+				'ADPY0001',
+				'Y'
+		)
+	</insert>
+
+	<update id="setAdmin" parameterClass="map">
+		UPDATE SSO_ADMN
+		SET    NAME = #name#,
+		       ADMN_TYPE = #type#,
+		       EMAIL = #email#,
+		       MENU_CODE = #menucode#
+		WHERE  ID = #id#
+	</update>
+
+	<delete id="removeAdmin" parameterClass="map">
+		DELETE FROM SSO_ADMN
+		WHERE  ID = #id#
+	</delete>
+
+	<update id="setAdpyInfo" parameterClass="map">
+		UPDATE SSO_ADPY
+		SET    PW_MISMATCH_ALLOW = #pwallow#,
+		       LOCK_TIME = #locktime#,
+		       SESSION_TIME = #sesstime#,
+		       IP_MAX_COUNT = #ipcnt#
+		WHERE  ADPY_CODE = #code#
+	</update>
+
+	<insert id="createAdminIp" parameterClass="map">
+		INSERT INTO SSO_ADIP (
+				IP
+		)
+		VALUES (
+				#ip#
+		)
+	</insert>
+
+	<delete id="removeAdminIp" parameterClass="map">
+		DELETE FROM SSO_ADIP
+		WHERE  IP = #ip#
+	</delete>
+
+	<update id="setUrpyInfo" parameterClass="map">
+		UPDATE
+				SSO_URPY
+		SET
+				PW_MISMATCH_ALLOW = #pwcnt#,
+				PW_CHANGE_WARN = #pwwarn#,
+				PW_VALIDATE = #pwvalid#,
+				POLLING_TIME = #polltime#,
+				SESSION_TIME = #sesstime#
+		WHERE
+				URPY_CODE = #code#
+	</update>
+
+	<insert id="createUser" parameterClass="map">
+		INSERT INTO SSO_USER (
+				ID,
+				NAME,
+				PASSWORD,
+				PW_UPDATE_TIME,
+				STATUS,
+				PW_MISMATCH_COUNT,
+				URPY_CODE
+		)
+		VALUES (
+				#id#,
+				#name#,
+				#pwd#,
+				TO_DATE(#update#, 'YYYYMMDDHH24MISS'),
+				'C',
+				'0',
+				'URPY0001'
+		)
+	</insert>
+
+	<update id="setUser" parameterClass="map">
+		UPDATE SSO_USER
+		SET    NAME = #name#
+		WHERE  ID = #id#
+	</update>
+
+	<update id="setUserChangePwd" parameterClass="map">
+		UPDATE SSO_USER
+		SET
+			PASSWORD = #pwd#,
+			PW_UPDATE_TIME = TO_DATE(#update#, 'YYYYMMDDHH24MISS'),
+			STATUS = 'C',
+			PW_MISMATCH_COUNT = '0'
+		WHERE  ID = #id#
+	</update>
+
+	<delete id="removeUser" parameterClass="map">
+		DELETE FROM SSO_USER
+		WHERE  ID = #id#
+	</delete>
+
+	<resultMap id="clientInfoResult" class="com.dreamsecurity.sso.server.api.admin.vo.ClientVO">
+		<result column="CLIENT" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="PROTOCOL" property="protocol"/>
+		<result column="ENABLED" property="enabled"/>
+		<result column="SECRET" property="secret"/>
+		<result column="RESPONSE_TYPE" property="responseType"/>
+		<result column="GRANT_TYPE" property="grantType"/>
+		<result column="NONCE" property="nonce"/>
+		<result column="PKCE" property="pkce"/>
+		<result column="REFRESH_TOKEN_USE" property="refreshTokenUse"/>
+		<result column="CODE_LIFESPAN" property="codeLifespan"/>
+		<result column="TOKEN_LIFESPAN" property="tokenLifespan"/>
+		<result column="REFRESH_TOKEN_LIFESPAN" property="refreshTokenLifespan"/>
+	</resultMap>
+
+	<select id="getClientList" resultMap="clientInfoResult">
+		SELECT CLIENT, NAME, PROTOCOL, ENABLED, SECRET, RESPONSE_TYPE, GRANT_TYPE, NONCE, PKCE,
+		       REFRESH_TOKEN_USE, CODE_LIFESPAN, TOKEN_LIFESPAN, REFRESH_TOKEN_LIFESPAN
+		FROM   SSO_CLIENT
+		ORDER BY NAME, CLIENT
+	</select>
+
+	<select id="getClientInfo" resultMap="clientInfoResult">
+		SELECT CLIENT, NAME, PROTOCOL, ENABLED, SECRET, RESPONSE_TYPE, GRANT_TYPE, NONCE, PKCE,
+		       REFRESH_TOKEN_USE, CODE_LIFESPAN, TOKEN_LIFESPAN, REFRESH_TOKEN_LIFESPAN
+		FROM   SSO_CLIENT
+		WHERE  CLIENT = #id#
+	</select>
+
+	<resultMap id="clientRedirectResult" class="com.dreamsecurity.sso.server.api.admin.vo.ClientVO">
+		<result column="REDIRECT_URI" property="redirectUri"/>
+	</resultMap>
+
+	<select id="getClientRedirect" parameterClass="map" resultMap="clientRedirectResult">
+		SELECT REDIRECT_URI
+		FROM   SSO_CLIENT_REDIRECT
+		WHERE  CLIENT = #id#
+	</select>
+
+	<select id="listClientRedirect" parameterClass="map" resultClass="String">
+		SELECT REDIRECT_URI
+		FROM   SSO_CLIENT_REDIRECT
+		WHERE  CLIENT = #id#
+	</select>
+
+	<resultMap id="clientScopeListResult" class="com.dreamsecurity.sso.server.api.admin.vo.ClientVO">
+		<result column="SCOPE" property="scope"/>
+		<result column="ENABLED" property="enabled"/>
+	</resultMap>
+
+	<select id="getClientScope" resultMap="clientScopeListResult">
+		SELECT B.SCOPE, '1' AS ENABLED
+		FROM   SSO_CLIENT_SCOPE A, SSO_SCOPES B
+		WHERE  A.CLIENT = #id#
+		AND    A.SCOPE = B.SCOPE
+		UNION
+		SELECT SCOPE, '0' AS ENABLED
+		FROM   SSO_SCOPES
+		WHERE  SCOPE NOT IN (SELECT SCOPE FROM SSO_CLIENT_SCOPE WHERE CLIENT = #id#)
+	</select>
+
+	<select id="listClientScope" parameterClass="map" resultClass="String">
+		SELECT CL.SCOPE
+		FROM   SSO_CLIENT_SCOPE CL,
+		       SSO_SCOPES SC
+		WHERE  CL.CLIENT = #id#
+		AND    CL.SCOPE = SC.SCOPE
+	</select>
+
+	<resultMap id="scopeListResult" class="com.dreamsecurity.sso.server.api.admin.vo.AdminVO">
+		<result column="SCOPE" property="id"/>
+	</resultMap>
+
+	<select id="getScopeList" resultMap="scopeListResult">
+		SELECT SCOPE
+		FROM   SSO_SCOPES
+		ORDER BY SCOPE
+	</select>
+
+	<delete id="removeClient" parameterClass="map">
+		DELETE FROM SSO_CLIENT
+		WHERE  CLIENT = #id#
+	</delete>
+
+	<insert id="createClient" parameterClass="map">
+		INSERT INTO SSO_CLIENT (
+				CLIENT,
+				NAME,
+				PROTOCOL,
+				ENABLED,
+				SECRET,
+				RESPONSE_TYPE,
+				GRANT_TYPE,
+				NONCE,
+				PKCE,
+				REFRESH_TOKEN_USE,
+				CODE_LIFESPAN,
+				TOKEN_LIFESPAN,
+				REFRESH_TOKEN_LIFESPAN
+		)
+		VALUES (
+				#id#,
+				#name#,
+				#protocol#,
+				#enabled#,
+				#secret#,
+				#responseType#,
+				#grantType#,
+				#nonce#,
+				#pkce#,
+				#refresh#,
+				#codeLife#,
+				#tokenLife#,
+				#refreshLife#
+		)
+	</insert>
+
+	<update id="setClient" parameterClass="map">
+		UPDATE SSO_CLIENT
+			SET
+				NAME = #name#,
+				PROTOCOL = #protocol#,
+				ENABLED = #enabled#,
+				SECRET = #secret#,
+				RESPONSE_TYPE = #responseType#,
+				GRANT_TYPE = #grantType#,
+				NONCE = #nonce#,
+				PKCE = #pkce#,
+				REFRESH_TOKEN_USE = #refresh#,
+				CODE_LIFESPAN = #codeLife#,
+				TOKEN_LIFESPAN = #tokenLife#,
+				REFRESH_TOKEN_LIFESPAN = #refreshLife#
+			WHERE
+				CLIENT = #id#
+	</update>
+
+	<delete id="removeClientRedirect" parameterClass="map">
+		DELETE FROM SSO_CLIENT_REDIRECT
+		WHERE  CLIENT = #id#
+	</delete>
+
+	<delete id="removeClientScope" parameterClass="map">
+		DELETE FROM SSO_CLIENT_SCOPE
+		WHERE  CLIENT = #id#
+	</delete>
+
+	<delete id="removeClientScopeByScope" parameterClass="map">
+		DELETE FROM SSO_CLIENT_SCOPE
+		WHERE  SCOPE = #id#
+	</delete>
+
+	<insert id="createClientRedirect" parameterClass="map">
+		INSERT ALL
+			<iterate property="redirectUriList" conjunction=" ">
+				INTO SSO_CLIENT_REDIRECT (
+					CLIENT,
+					REDIRECT_URI
+				)
+				VALUES (
+					#id#,
+					#redirectUriList[]#
+				)
+			</iterate>
+		SELECT * FROM DUAL
+	</insert>
+
+	<insert id="createClientScope" parameterClass="map">
+		INSERT ALL
+			<iterate property="scopeList" conjunction=" ">
+				INTO SSO_CLIENT_SCOPE (
+					SCOPE,
+					CLIENT
+				)
+				VALUES (
+					#scopeList[]#,
+					#id#
+				)
+			</iterate>
+		SELECT * FROM DUAL
+	</insert>
+
+	<delete id="removeScope" parameterClass="map">
+		DELETE FROM SSO_SCOPES
+		WHERE  SCOPE = #id#
+	</delete>
+
+	<insert id="createScope" parameterClass="map">
+		INSERT INTO SSO_SCOPES (
+			SCOPE
+		)
+		VALUES (
+			#id#
+		)
+	</insert>
+
+</sqlMap>

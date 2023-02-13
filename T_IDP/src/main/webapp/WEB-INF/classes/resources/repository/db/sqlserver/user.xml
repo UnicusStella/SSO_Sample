@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<!-- SQL Server -->
+<sqlMap namespace="user">
+
+	<cacheModel id="dataCache" type="LRU">
+		<flushInterval hours="24"/>
+		<property name="size" value="1000"/>
+	</cacheModel>
+
+	<select id="getStatus" parameterClass="map" resultClass="hashmap">
+		SELECT 1
+	</select>
+
+	<select id="getUserByID" parameterClass="map" resultClass="hashMap">
+		SELECT
+				A.ID,
+				A.NAME,
+				A.PASSWORD AS USER_PASSWORD,
+				FORMAT(A.PW_UPDATE_TIME, 'yyyyMMddHHmmss') AS PW_UPDATE_TIME,
+				A.STATUS AS USER_STATUS,
+				ISNULL(A.PW_MISMATCH_COUNT, '0') AS PW_MISMATCH_COUNT,
+				A.LAST_LOGIN_IP AS LAST_LOGIN_IP,
+				FORMAT(ISNULL(A.LAST_LOGIN_TIME, GETDATE()), 'yyyyMMddHHmmss') AS LAST_LOGIN_TIME,
+				A.LOGIN_IP AS NOW_LOGIN_IP,
+				A.LOGIN_BR AS NOW_LOGIN_BR,
+				FORMAT(GETDATE(), 'yyyyMMddHHmmss') AS NOW_LOGIN_TIME,
+				FORMAT(ISNULL(A.ACCESS_TIME, GETDATE()), 'yyyyMMddHHmmss') AS ACCESS_TIME,
+				FORMAT(GETDATE(), 'yyyyMMddHHmmssfff') AS TIMESTAM_,
+				FORMAT(DATEADD(HOUR, 1, GETDATE()), 'yyyyMMddHHmmss') AS NOT_AFTER,
+				ISNULL(B.PW_MISMATCH_ALLOW, '0') AS PW_MISMATCH_ALLOW,
+				ISNULL(B.PW_VALIDATE, '0') AS PW_VALIDATE,
+				ISNULL(B.PW_CHANGE_WARN, '0') AS PW_CHANGE_WARN,
+				CAST(DATEDIFF(DAY, ISNULL(A.PW_UPDATE_TIME, GETDATE()), GETDATE()) AS VARCHAR) AS PW_UPDATE_DAYS,
+				ISNULL(B.POLLING_TIME, '0') AS POLLING_TIME,
+				ISNULL(B.SESSION_TIME, '0') AS SESSION_TIME,
+				ISNULL(A.EMAIL, '') AS EMAIL
+		FROM
+				SSO_USER A,
+				SSO_URPY B
+		WHERE
+				A.ID = #userId#
+			AND A.URPY_CODE = B.URPY_CODE
+	</select>
+
+	<select id="getUserByCert" parameterClass="map" resultClass="hashMap">
+		SELECT
+				A.ID,
+				A.NAME,
+				A.PASSWORD AS USER_PASSWORD,
+				FORMAT(A.PW_UPDATE_TIME, 'yyyyMMddHHmmss') AS PW_UPDATE_TIME,
+				A.STATUS AS USER_STATUS,
+				ISNULL(A.PW_MISMATCH_COUNT, '0') AS PW_MISMATCH_COUNT,
+				A.LAST_LOGIN_IP AS LAST_LOGIN_IP,
+				FORMAT(ISNULL(A.LAST_LOGIN_TIME, GETDATE()), 'yyyyMMddHHmmss') AS LAST_LOGIN_TIME,
+				A.LOGIN_IP AS NOW_LOGIN_IP,
+				A.LOGIN_BR AS NOW_LOGIN_BR,
+				FORMAT(GETDATE(), 'yyyyMMddHHmmss') AS NOW_LOGIN_TIME,
+				FORMAT(ISNULL(A.ACCESS_TIME, GETDATE()), 'yyyyMMddHHmmss') AS ACCESS_TIME,
+				FORMAT(GETDATE(), 'yyyyMMddHHmmssfff') AS TIMESTAM_,
+				FORMAT(DATEADD(HOUR, 1, GETDATE()), 'yyyyMMddHHmmss') AS NOT_AFTER,
+				ISNULL(B.PW_MISMATCH_ALLOW, '0') AS PW_MISMATCH_ALLOW,
+				ISNULL(B.PW_VALIDATE, '0') AS PW_VALIDATE,
+				ISNULL(B.PW_CHANGE_WARN, '0') AS PW_CHANGE_WARN,
+				CAST(DATEDIFF(DAY, ISNULL(A.PW_UPDATE_TIME, GETDATE()), GETDATE()) AS VARCHAR) AS PW_UPDATE_DAYS,
+				ISNULL(B.POLLING_TIME, '0') AS POLLING_TIME,
+				ISNULL(B.SESSION_TIME, '0') AS SESSION_TIME,
+				ISNULL(A.EMAIL, '') AS EMAIL
+		FROM
+				SSO_USER A,
+				SSO_URPY B
+		WHERE
+				A.DN = #userDn#
+			AND A.URPY_CODE = B.URPY_CODE
+	</select>
+
+	<select id="countUserLockedList" parameterClass="map" resultClass="hashMap">
+		SELECT COUNT(1) AS CNT
+		FROM   SSO_USER
+		WHERE  STATUS = 'D'
+	</select>
+
+	<select id="countUserListByVal" parameterClass="map" resultClass="hashMap">
+		SELECT COUNT(1) AS CNT
+		FROM   SSO_USER
+		<isNotEmpty property="userId">
+		WHERE  ID LIKE CONCAT(#userId#, '%')
+		</isNotEmpty>
+		<isNotEmpty property="userName">
+		WHERE  NAME LIKE CONCAT(#userName#, '%')
+		</isNotEmpty>
+	</select>
+
+	<resultMap id="userListResult" class="com.dreamsecurity.sso.server.api.user.vo.UserVO">
+		<result column="NUM" property="index"/>
+		<result column="ID" property="id"/>
+		<result column="NAME" property="name"/>
+		<result column="STATUS" property="status"/>
+		<result column="LOGIN_TIME" property="logintime"/>
+		<result column="LOGIN_IP" property="loginip"/>
+		<result column="LOGIN_BR" property="loginbr"/>
+	</resultMap>
+
+	<select id="getUserListByVal" parameterClass="map" resultMap="userListResult">
+		SELECT NUM, ID, NAME, STATUS, LOGIN_TIME, LOGIN_IP, LOGIN_BR
+		FROM   (
+			<isNotEmpty property="userId">
+			SELECT ROW_NUMBER() OVER(ORDER BY ID, NAME) AS NUM,
+			</isNotEmpty>
+			<isEmpty property="userId">
+			SELECT ROW_NUMBER() OVER(ORDER BY NAME, ID) AS NUM,
+			</isEmpty>
+			       ID, NAME, STATUS,
+			       ISNULL(FORMAT(LOGIN_TIME, 'yyyyMMddHHmmss'), '') AS LOGIN_TIME,
+				   ISNULL(LOGIN_IP, '') AS LOGIN_IP, ISNULL(LOGIN_BR, '') AS LOGIN_BR
+			FROM   SSO_USER
+			<isNotEmpty property="userId">
+			WHERE  ID LIKE CONCAT(#userId#, '%')
+			</isNotEmpty>
+			<isNotEmpty property="userName">
+			WHERE  NAME LIKE CONCAT(#userName#, '%')
+			</isNotEmpty>
+		) S
+		WHERE  NUM BETWEEN #fnum# AND #tnum#
+	</select>
+
+	<select id="getUserLockedList" parameterClass="map" resultMap="userListResult">
+		SELECT NUM, ID, NAME, STATUS, '' AS LOGIN_TIME, '' AS LOGIN_IP, '' AS LOGIN_BR
+		FROM   (
+			SELECT ROW_NUMBER() OVER(ORDER BY NAME, ID) AS NUM,
+			       ID, NAME, STATUS
+			FROM   SSO_USER
+			WHERE  STATUS = 'D'
+		) S
+		WHERE  NUM BETWEEN #fnum# AND #tnum#
+	</select>
+
+	<update id="setPWMismatchCount" parameterClass="map">
+		UPDATE
+				SSO_USER
+		SET
+				ACCESS_TIME = GETDATE(),
+				PW_MISMATCH_COUNT = #count#,
+				STATUS = #status#
+		WHERE
+				ID = #userId#
+	</update>
+
+	<update id="setUserAccessInfo" parameterClass="map">
+		UPDATE
+				SSO_USER
+		SET
+				PW_MISMATCH_COUNT = '0',
+				STATUS = 'C',
+				LAST_LOGIN_IP = #userIp#,
+				LAST_LOGIN_TIME = GETDATE(),
+				LOGIN_IP = #userIp#,
+				LOGIN_BR = #userBr#,
+				LOGIN_TIME = GETDATE(),
+				ACCESS_TIME = GETDATE()
+		WHERE
+				ID = #userId#
+	</update>
+
+	<update id="setIpInfo" parameterClass="map">
+		UPDATE
+				SSO_IPLG
+		SET
+				LOGIN_ID = #userId#,
+				LOGIN_BR = #userBr#,
+				LOGIN_TIME = GETDATE()
+		WHERE
+				IP = #userIp#
+	</update>
+
+	<insert id="addIpInfo" parameterClass="map">
+		INSERT INTO SSO_IPLG (
+				IP,
+				LOGIN_ID,
+				LOGIN_BR,
+				LOGIN_TIME
+		)
+		VALUES(
+				#userIp#,
+				#userId#,
+				#userBr#,
+				GETDATE()
+		)
+	</insert>
+
+	<update id="setUserUnlock" parameterClass="map">
+		UPDATE
+				SSO_USER
+		SET
+				PW_MISMATCH_COUNT = '0',
+				STATUS = 'C',
+				LOGIN_IP = '',
+				LOGIN_BR = '',
+				LOGIN_TIME = NULL
+		WHERE
+				ID = #userId#
+	</update>
+
+	<update id="clearLoginIP" parameterClass="map">
+		UPDATE
+				SSO_USER
+		SET
+				LOGIN_IP = CASE WHEN LOGIN_IP = #userIp# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN '' ELSE LOGIN_IP END
+							ELSE LOGIN_IP END,
+				LOGIN_BR = CASE WHEN LOGIN_IP = #userIp# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN '' ELSE LOGIN_BR END
+							ELSE LOGIN_BR END,
+				LOGIN_TIME = CASE WHEN LOGIN_IP = #userIp# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN NULL ELSE LOGIN_TIME END
+							ELSE LOGIN_TIME END
+		WHERE
+				ID = #userId#
+	</update>
+
+	<update id="clearIpInfo" parameterClass="map">
+		UPDATE
+				SSO_IPLG
+		SET
+				LOGIN_ID = CASE WHEN LOGIN_ID = #userId# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN '' ELSE LOGIN_ID END
+							ELSE LOGIN_ID END,
+				LOGIN_BR = CASE WHEN LOGIN_ID = #userId# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN '' ELSE LOGIN_BR END
+							ELSE LOGIN_BR END,
+				LOGIN_TIME = CASE WHEN LOGIN_ID = #userId# THEN
+								CASE WHEN LOGIN_BR = #userBr# THEN NULL ELSE LOGIN_TIME END
+							ELSE LOGIN_TIME END
+		WHERE
+				IP = #userIp#
+	</update>
+
+	<update id="setUserPwd" parameterClass="map">
+		UPDATE SSO_USER
+		SET    PASSWORD = #newPwd#,
+		       PW_UPDATE_TIME =
+		         CONVERT(DATETIME, CONCAT(SUBSTRING(#update#,1,4),'-',SUBSTRING(#update#,5,2),'-',SUBSTRING(#update#,7,2),' ',
+		           SUBSTRING(#update#,9,2),':',SUBSTRING(#update#,11,2),':',SUBSTRING(#update#,13,2)), 120)
+		WHERE  ID = #userId#
+		<isNotEmpty property="curPwd">
+		AND    PASSWORD = #curPwd#
+		</isNotEmpty>
+	</update>
+
+	<update id="setAccessTime" parameterClass="map">
+		UPDATE SSO_USER
+		SET    ACCESS_TIME =
+		         CASE WHEN LOGIN_IP = #userIp# THEN GETDATE() ELSE ACCESS_TIME END
+		WHERE  ID = #userId#
+	</update>
+
+	<select id="getCSLoginTime" parameterClass="map" resultClass="hashMap">
+		SELECT ISNULL(FORMAT(CS_LOGIN_TIME, 'yyyyMMddHHmmss'), '') AS CS_LOGIN_TIME
+		FROM   SSO_USER
+		WHERE  ID = #userId#
+	</select>
+
+	<update id="setCSLoginTime" parameterClass="map">
+		UPDATE SSO_USER
+		SET    CS_LOGIN_TIME = ISNULL(LOGIN_TIME, GETDATE())
+		WHERE  ID = #userId#
+	</update>
+
+	<update id="clearCSLoginTime" parameterClass="map">
+		UPDATE SSO_USER
+		SET    CS_LOGIN_TIME = NULL
+		WHERE  ID = #userId#
+		AND    LOGIN_IP = #userIp#
+	</update>
+
+	<select id="getOidcUserInfo" parameterClass="map" resultClass="hashMap" remapResults="true">
+        SELECT 
+        <iterate property="scopeList" conjunction=",">
+        	$scopeList[]$
+        </iterate>
+		FROM   SSO_USER
+		WHERE  ID = #id#
+	</select>
+
+</sqlMap>

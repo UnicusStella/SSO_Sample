@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository>
+	<repository type="db">
+	</repository>
+
+	<object-pool auto-loading="true">
+		<dbex name="default_db" load-complete="false" usable="true">
+			<config-file>config/pooling/repository/db/default_db.xml</config-file>
+		</dbex>
+	</object-pool>
+
+	<connect>
+		<monitor enable="true">
+			<checkinterval>5</checkinterval><!-- min -->
+		</monitor>
+	</connect>
+</repository>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE digester-rules PUBLIC
+         "-//Jakarta Apache //DTD digester-rules XML V1.0//EN"
+         "digester-rules.dtd">
+
+<digester-rules>
+
+	<object-create-rule pattern="pool-config" classname="com.dreamsecurity.sso.server.repository.ldap.pool.LdapPool"/>
+
+	<pattern value="pool-config/connection-info">
+		<object-create-rule classname="com.dreamsecurity.sso.server.repository.ldap.pool.LdapConnectionFactory"/>
+		<bean-property-setter-rule pattern="host" propertyname="host"/>
+		<bean-property-setter-rule pattern="port" propertyname="port"/>
+		<bean-property-setter-rule pattern="auth-id" propertyname="authId"/>
+		<bean-property-setter-rule pattern="auth-password" propertyname="authPassword"/>
+		<set-next-rule methodname="setFactory"/>
+	</pattern>
+
+	<pattern value="pool-config/configuration">
+		<bean-property-setter-rule pattern="lifo" propertyname="lifo"/>
+		<bean-property-setter-rule pattern="maxIdle" propertyname="maxIdle"/>
+		<bean-property-setter-rule pattern="minIdle" propertyname="minIdle"/>
+		<bean-property-setter-rule pattern="maxActive" propertyname="maxActive"/>
+		<bean-property-setter-rule pattern="maxWait" propertyname="maxWait"/>
+		<bean-property-setter-rule pattern="whenExhaustedAction" propertyname="whenExhaustedAction"/>
+		<bean-property-setter-rule pattern="testOnBorrow" propertyname="testOnBorrow"/>
+		<bean-property-setter-rule pattern="testOnReturn" propertyname="testOnReturn"/>
+		<bean-property-setter-rule pattern="testWhileIdle" propertyname="testWhileIdle"/>
+		<bean-property-setter-rule pattern="timeBetweenEvictionRunsMillis" propertyname="timeBetweenEvictionRunsMillis"/>
+		<bean-property-setter-rule pattern="numTestsPerEvictionRun" propertyname="numTestsPerEvictionRun"/>
+		<bean-property-setter-rule pattern="minEvictableIdleTimeMillis" propertyname="minEvictableIdleTimeMillis"/>
+	</pattern>
+
+</digester-rules>

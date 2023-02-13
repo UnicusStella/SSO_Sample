@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+/* Reset */
+*{ box-sizing: border-box; user-select: none; }
+html,body,form {width:100%; height:100%}
+html {overflow-y:auto;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,form,fieldset,p,button,textarea,input {font-family:'Malgun Gothic', Sans-serif;  margin:0; padding:0; word-break:break-all; word-break:keep-all; font-weight:400;}
+body,h1,h2,h3,h4,input,button {font-size:12px; color:#333;}
+body {background-color:#fff; text-align:center; *word-break:break-all; -ms-word-break:break-all;}
+img,fieldset,iframe {border:0 none;}
+li {list-style:none;}
+input,select,button {outline:none; border:none;}
+input {text-indent:16px;}
+img {vertical-align:top;}
+i,em,address {font-style:normal;}
+label,button {cursor:pointer;}
+button {margin:0; padding:0;}
+a {text-decoration:none; color:transparent;}
+a:hover {text-decoration:none; outline:none !important;}
+a:focus {text-decoration:none; outline:none !important;}
+button * {position:relative; outline:none !important;}
+button img {left:-3px; *left:auto}
+html:first-child select {height:40px; padding-right:0;}
+option {padding-right:6px;}
+legend {*width:0;}
+table {border-collapse:collapse; border-spacing:0;}
+input::-ms-clear {display:none;}
+canvas {-moz-user-select:none; -webkit-user-select:none; -ms-user-select:none;}
+svg {width:100%;}
+textarea {width:100%; border:1px solid #E8E9EC; resize:none; outline:none;}
+
+.normal		{ font-weight: 400 }
+.bold		{ font-weight: 700 }
+.light		{ font-weight: 300 }
+
+/*layout*/
+.wrap {width:100%; height:100%;}
+.con_wrap {width:100%; height:100%;}
+.contents_box {padding:10% 20px 0; height:100%; background:linear-gradient(145deg, #3E92DE, #0054A0);}
+.login_area {margin:0 auto; width:50%; box-shadow:0 0 20px rgba(0, 0, 0, 0.5); background:#fff; min-height:420px; max-height:520px; min-width:560px; max-width:800px; border-radius:6px;}
+.login_box {display:inline-block; width:80%; background:#fff; padding:40px 40px 20px; vertical-align:middle; border-radius:6px 0 0 6px;}
+.login_tit {text-align:center; font-size:34px; margin-top:10px; font-weight:bold}
+.login_tit img {width:280px; padding-bottom:20px;}
+.input_wrap {margin-top:20px; width:100%;}
+.contact_noti {font-size:12px; text-align:center; padding-bottom:130px; padding-top:20px; font-size:14px; color:#B6BBE8;}
+.contact_noti span {display:inline-block;}
+
+/*common*/
+.input_box {height:40px; line-height:40px; font-size:16px; border:1px solid #ccc; border-radius:2px; text-indent:20px; font-weight:bold}
+.input_box::placeholder {color:#ccc; opacity:1;}
+input::-webkit-input-placeholder {color:#ccc;}
+input:-ms-input-placeholder {color:#ccc;}
+input:-mos-input-placeholder {color:#ccc;}
+.input_box:read-only {background-color:#F6F8F9;}
+.input_box:hover {border:1px solid #0882D6;}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {-webkit-appearance:none; margin:0;}
+
+.txt_blue {color:#0882D6;}
+.txt_gry {color:#B6BBE8;}
+.txt_black {color:#333 !important;}
+.txt_red {color:#DF696C !important;}
+.txt_right {text-align:right;}
+.txt_center {text-align:center;}
+.txt_bold {font-weight:bold;}
+
+.mt_0  {margin-top:0 !important;}
+.mt_50 {margin-top:50px !important;}
+
+.mb_10 {margin-bottom:10px;}
+.mb_20 {margin-bottom:20px;}
+
+.float_left {float:left;}
+.float_right {float:right;}
+.clear {clear:both;}
+
+.width_20p  {width:20%;}
+.width_30p  {width:30%; display:inline-block;}
+.width_35p  {width:35%; display:inline-block;}
+.width_40p  {width:40%; display:inline-block;}
+.width_50p  {width:50%; display:inline-block;}
+.width_60p  {width:60%; display:inline-block;}
+.width_70p  {width:70%; display:inline-block;}
+.width_80p  {width:80%; display:inline-block;}
+.width_100p {width:100%; display:inline-block;}
+
+.width_10  {display:inline-block; width:10px;}
+.width_30  {display:inline-block; width:30px;}
+.width_40  {display:inline-block; width:40px;}
+.width_50  {display:inline-block; width:50px;}
+.width_80  {display:inline-block; width:80px;}
+.width_160 {width:160px;}
+.width_300 {width:300px;}
+
+.space_10 {display:inline-block; margin-left:10px;}
+.space_20 {display:inline-block; margin-left:20px;}
+
+.ver_middle {vertical-align: middle;}
+
+.blue_btn {height:50px; line-height:50px; font-size:16px; background:#0882D6; color:#fff; border-radius:5px; font-weight:bold}
+.blue_btn:hover {background:#0668AB;}
+.blue_btn a {display:block; color:#fff;}

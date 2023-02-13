@@ -1,0 +1,35 @@
+
+table#info {
+	width: 100%;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #eee;
+}
+table#info tr td {
+	padding: 0px;
+	spacing: 0px;
+	text-align: left;
+	vertical-align: middle;
+	font-size: .9rem;
+}
+table#info tr {
+	height: 41px;
+}
+table#info td {
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid #eee;
+}
+table#info td.tdlast {
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px solid #eee;
+}
+table#info td#colnm {
+	background-color: #f8f8f8;
+	padding-right: 15px;
+	font-weight: 600;
+	text-align: right;
+}
+table#info td#coldata {
+	padding-left: 15px;
+}

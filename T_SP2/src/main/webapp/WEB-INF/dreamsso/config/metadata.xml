@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<md:EntitiesDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" Name="DREAM" validUntil="2041-06-23T23:45:25.746Z">
+    <md:EntityDescriptor entityID="T_IDP">
+        <md:IDPSSODescriptor>
+            <md:KeyDescriptor use="encryption">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIDrzCCApegAwIBAgIKSHFK/ewJyqGflTANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UMB4XDTE5
+MDczMDA0NDE1OVoXDTIwMDczMDA0NDE1OVowSjELMAkGA1UEBhMCS1IxFjAUBgNVBAoMDURyZWFt
+U2VjdXJpdHkxDDAKBgNVBAsMA1NTTzEVMBMGA1UEAwwMVEVTVF9JRFBfRW5jMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmQk1VQWAPx+DMRPBEikOwqgl4wczxK2wchDEohP3uoEQuSFQ
+E3OVb7kMUlYL8MGNTAYB2cmkmG83N00s8cijPy/4eIVXcuPcBJSP8wDk2nb843wKLAwIlRnCL8j/
+bTvTGEeqmKEExKZQPLS38H1teKZKFTXu9fCEQAOx9rE21vliWzo1dNmqlmP81XVay6QVd9/R0/+G
+kUxicUtxg6j2ff20UMkoV7e+fgYfynz3wU0tuqfmQ3gjj32UFJUArbPmxmHyCO1loFaCWBDvhRaQ
+ESKdxS98m8sb+MjwCB84aaBmUijqhQt8MesSm0RtTUYr3FqVeNN99SUt1XLiLsjG/QIDAQABo4Ge
+MIGbMGoGA1UdIwRjMGGAFCIJNWM3yFuvIWakv+NwBWyb5C+1oUakRDBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UggEBMB0G
+A1UdDgQWBBR7RBjBM11Vq1QYSpmyVPMXcW6xGTAOBgNVHQ8BAf8EBAMCBDAwDQYJKoZIhvcNAQEL
+BQADggEBAC81z+xpRpu2j+wicJQTj2tgTl+D7jJkgMIViLEQYs9CHsCCvIb5dIRcyZ9wRbjSOf1q
+zQ8gxRTi9VMpD3OU1ma0MscE2EMjAMPa3eX1fTgDWuc83VIizMKWqkSS2vOJppm6/J6R21u47Iss
+G1qlVjSZgQxw94V6wcjLH9UfhxiiYexO0htCzf0NRoF5xFIJdBGWKqAhUHYse02D+u+5uA7gMGcN
+RIUWstSYlP9UhKKQ7yh5lQUMCpnuY58Vck8LnLsoTITq39tghMe7e6LX99pZIjMQU8T02MtzUAqS
+Ah31W7FMIgYa37SM12veaLTprbcuSa9cxGqoUvQjBxJf93w=</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:KeyDescriptor use="signing">
+                <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                    <ds:X509Data>
+                        <ds:X509Certificate>MIIDrzCCApegAwIBAgIKJ3FJ2X74qTvzjjANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UMB4XDTE5
+MDczMDA0NDQ1NloXDTIwMDczMDA0NDQ1NlowSjELMAkGA1UEBhMCS1IxFjAUBgNVBAoMDURyZWFt
+U2VjdXJpdHkxDDAKBgNVBAsMA1NTTzEVMBMGA1UEAwwMVEVTVF9JRFBfU2lnMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtrjlVlgXb0YZx1W/DGzBfXipI1kecxHbbeJxVSkpqZWLgbmG
+5alRpPTZOkGKfSMTo2kvWjIZYCnZlhOFKuLMGY7OwkwbCBCelph/XJ57RpsUMtPfUmOzsKtj+G+W
+3+jxV1HAaN9muBYtjwMnQ3vmBWfNgfJClBPqiJVoIe87TlpgV79svNjgRnojzfJR++1VwLixehXO
+goIGfmu3+t9PIkg5gLeXOIpUxdnb5eLyjcSFuZ/TmPNySq3825Ai28Hsx21G3hNsmeIjZlqAOyfH
+ObwTe2kdYnK2p0u3xvwr1nwWFt8Bk20UZER1LK0EVdk1ecRFSPr8XSgnEGjWtpRQEQIDAQABo4Ge
+MIGbMGoGA1UdIwRjMGGAFMY8aThESm/H7R72p/2eDorfWK8IoUakRDBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UggEBMB0G
+A1UdDgQWBBTcFYG7uZfuqIuuM8RVOW5oIu+QsDAOBgNVHQ8BAf8EBAMCBsAwDQYJKoZIhvcNAQEL
+BQADggEBAHMm0c4Z5lLc03DwoJuzxTm1P9OMFCdsTx8CtkJJenhdQheQjUmER5+FmgPR0hiiWCnq
+FNRu7N+IWYZMA89pJCIWtkU49CyYW26nZYDhrY5tBnVxMk5Ij9fQf4tAVoyLA+hoP31h/K6Fsvte
+YHMF0NgeL51alY3DnKGk7847miJufIe21QhW7vdwyPVsIFJQeoeBIYFTGGxOSmYjdR8/JN4kY/zf
+dRnrgiWQLg499iclPTL49U7Ww6lla2LfazPl65RaXTHEhclLbbtnmEHxesKbZEj0/31VDiAoebWp
+IoUE31H9RUQ/DY8+UjAAetITg68Z/ScnETdtiMkjhWDP+j0=</ds:X509Certificate>
+                    </ds:X509Data>
+                </ds:KeyInfo>
+            </md:KeyDescriptor>
+            <md:SingleLogoutService Location="http://idp.dev.com:40001/sso/Logout.jsp"/>
+            <md:SingleSignOnService Location="http://idp.dev.com:40001/sso/Request.jsp"/>
+        </md:IDPSSODescriptor>
+    </md:EntityDescriptor>
+    <md:EntitiesDescriptor>
+        <md:EntityDescriptor entityID="T_SP1">
+            <md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true">
+                <md:KeyDescriptor use="encryption">
+                    <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                        <ds:X509Data>
+                            <ds:X509Certificate>MIIDrzCCApegAwIBAgIKXOiKjJyR+TfdlDANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UMB4XDTE5
+MDczMDA0NDY1OVoXDTIwMDczMDA0NDY1OVowSjELMAkGA1UEBhMCS1IxFjAUBgNVBAoMDURyZWFt
+U2VjdXJpdHkxDDAKBgNVBAsMA1NTTzEVMBMGA1UEAwwMVEVTVF9TUDFfRW5jMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsueOe8lRJMjXRumKe34Axh1J3WNcvaSTo7MX7/EEYur4RVxR
+HnulKbVD3hxh64JmjxB4CNN7pIlT9OgrHHZIkF59K4eWuungCWlx0Z5SVDN7qECJgU0ZOqhVninT
+WlNR8YMML99uRXZDe/9xxxSaNzKOmfuO4GmyQdbL4fYkoEIsAs1Tcy10FL7u4PnrhXa4YIgz6GKp
+rC1rH++H6pJYzqMkpX7RlJHbFXs7inr14iqcI/Rpn/QD7iqahlOeK1uTn6iio9nDo4nun/AN0crA
+SYGXYxLagWI3CU54IkKuBR78Qusv41pT/n1/LyEqcRbC/y9tLwHgBEXVk9AP3KZnBwIDAQABo4Ge
+MIGbMGoGA1UdIwRjMGGAFEiIoWoIHf86CxI6GLPWudcsPE1MoUakRDBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UggEBMB0G
+A1UdDgQWBBTLX4ncrPaV3JRoTcy1jW88Svf8tzAOBgNVHQ8BAf8EBAMCBDAwDQYJKoZIhvcNAQEL
+BQADggEBADb0MlkAwXuliDvCt0ao6tfYTaiMHjrMt10I/kD5xb5FdtknFLAMhQdFmvokvhRNaJsk
+eoVVTTLKFlNSKm6prtd0mXcQ/Nyt9eo9rT7UNEZkN+w63Qra6GWtokG3nSGjSqr3tuy9fE8rjlTH
+wQd2KdLCyiKZ/575ZcNvLEMilaVVvfbTqAEJtQmkpxDBstTCB95EUVPMS6Mmmv8fdSnwFpTMUbga
+Ha+tzUKi+J7pc6uHA3MqvgJ+nmeciWZ6Ts99POIjr2/H0IUQMtfGc2ZYbjVZcyAiXEh+z8QU5k8e
+Ka0Wb0ADY++f/zU2RjAp+F0eMXdQsqp8dXbV8pkAeI0orGo=</ds:X509Certificate>
+                        </ds:X509Data>
+                    </ds:KeyInfo>
+                </md:KeyDescriptor>
+                <md:KeyDescriptor use="signing">
+                    <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                        <ds:X509Data>
+                            <ds:X509Certificate>MIIDrzCCApegAwIBAgIKLQrywh4Ks0lekDANBgkqhkiG9w0BAQsFADBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UMB4XDTE5
+MDczMDA0NDgyMVoXDTIwMDczMDA0NDgyMVowSjELMAkGA1UEBhMCS1IxFjAUBgNVBAoMDURyZWFt
+U2VjdXJpdHkxDDAKBgNVBAsMA1NTTzEVMBMGA1UEAwwMVEVTVF9TUDFfU2lnMIIBIjANBgkqhkiG
+9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsDBSxvwRtp3qcnttsY08x2OO64GF3dRyKfFWkBWGZPcAy3yh
+qMNOrmrapcZq+k/pmVrPwPoRbV7n8ER7cXkRAGX8T0Xuleb1PP9NgLzS58DTSnyox0CJy+BaGSDi
+QtwMVwT+v9Rw/SAPefLaAsnxAE66opuFI4kkmIh4a1kTdcq70hJtYMXNEdLQFB0cNMZainTPRgga
+SU0Unr8GeveRIQWaoIIEDav0WYreql+2iHYIyNcCX9I9BqQOebdrELV91cxPBiFejwfEhLFijrKO
+O+NGqQ7hkhNcfYH9bgALHlD7HFgrRr4G7qNRnoIt1JmF0UrhD2HZVD7gP5WwsBRrKwIDAQABo4Ge
+MIGbMGoGA1UdIwRjMGGAFC5qLw5PeEugfteTv3pUZ7o2OekBoUakRDBCMQswCQYDVQQGEwJLUjEW
+MBQGA1UECgwNRHJlYW1TZWN1cml0eTEMMAoGA1UECwwDU1NPMQ0wCwYDVQQDDARST09UggEBMB0G
+A1UdDgQWBBRJcr+Pmck5pciHEqcIuFk6xny3NzAOBgNVHQ8BAf8EBAMCBsAwDQYJKoZIhvcNAQEL
+BQADggEBAJozIVENebGj/F+ZkZrvtbUrOuBdLnh7PF4ufpaoG9m1uevmFkZeh3T8qCTVlg/8rz/N
+88SU71wTfYf9sTv1FgmWKMLo4EPB7rDFa59LwoEJ8Uw/JXbaIrNzLZ02I/P8a7HupEfyFJdHXx/a
+GogcVxlR7T4h6oDWQ2eubMHg4HTVx4m1xDOE1kBUQPO3umVnXRbBM+HcLwCunoKWSOrZl5ZT0hrP
+QgwiZWQP1BBOhalqMviE5buKXN0cAnY+G0bNpBYKNhiYYmi8GuFPDP8ltUeOQoC0fy/t3tbYa/6P
+mVIzsmKlqDEBf4Mlwzq4t4bImPiDzSGm/xmqx7F0gXbdzyg=</ds:X509Certificate>
+                        </ds:X509Data>
+                    </ds:KeyInfo>
+                </md:KeyDescriptor>
+                <md:SingleLogoutService Location="http://sp1.dev.com:40004/sso/Logout.jsp"/>
+                <md:AssertionConsumerService Location="http://sp1.dev.com:40004/sso/Response.jsp" isDefault="true"/>
+            </md:SPSSODescriptor>
+        </md:EntityDescriptor>
+    </md:EntitiesDescriptor>
+</md:EntitiesDescriptor>

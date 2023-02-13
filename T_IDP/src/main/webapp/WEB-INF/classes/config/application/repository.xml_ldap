@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<repository>
+	<repository type="ldap">
+		<base-dn></base-dn>
+		<connection-pool external="true">
+			<name>REPOSITORY_POOL</name>
+		</connection-pool>
+	</repository>
+
+	<object-pool auto-loading="true">
+		<ldap name="REPOSITORY_POOL" load-complete="false" usable="true">
+			<digester-rule-file>config/pooling/repository/ldap/ldap-pool-rules.xml</digester-rule-file>
+			<config-file>config/pooling/repository/ldap/ldap-pool-config.xml</config-file>
+		</ldap>
+		<dbex name="default_db" load-complete="false" usable="false">
+			<config-file>config/pooling/repository/db/default_db.xml</config-file>
+		</dbex>
+	</object-pool>
+
+	<query-map>
+		<ldap name="REPOSITORY_POOL" load-complete="false">
+			<root-dn></root-dn>
+			<digester-rule-file>resources/repository/ldap/ldap-mapping-rules.xml</digester-rule-file>
+			<config-file>resources/repository/ldap/ldap-maps-config.xml</config-file>
+		</ldap>
+	</query-map>
+
+	<dao>
+		<audit>
+			<ldap>
+				<class>com.dreamsecurity.sso.server.api.audit.dao.impl.AuditLdapDaoImpl</class>
+			</ldap>
+		</audit>
+		<admin>
+			<ldap>
+				<class>com.dreamsecurity.sso.server.api.admin.dao.impl.AdminLdapDaoImpl</class>
+			</ldap>
+		</admin>
+		<user>
+			<ldap>
+				<class>com.dreamsecurity.sso.server.api.user.dao.impl.UserLdapDaoImpl</class>
+			</ldap>
+		</user>
+	</dao>
+
+	<connect>
+		<monitor enable="true">
+			<checkinterval>5</checkinterval><!-- min -->
+		</monitor>
+	</connect>
+</repository>

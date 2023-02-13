@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<queryMap id="audit">
+
+	<select id="getStatusAudit" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		<base>ou=auditpolicy,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoAuditPolicy)(cn=AUPY0001))</filter>
+		<attributes>
+			<attribute alias="WARN_LIMIT">ssoWarnLimit</attribute>
+			<attribute alias="VERIFY_CYCLE">ssoVerifyCycle</attribute>
+			<attribute alias="VERIFY_POINT">ssoVerifyPoint</attribute>
+			<attribute alias="VERIFY_TIME">ssoVerifyTime</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+	</select>
+
+	<select id="getAupyInfo" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.audit.vo.AupyVO">
+		<base>ou=auditpolicy,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoAuditPolicy)(cn=AUPY0001))</filter>
+		<attributes>
+			<attribute alias="warnLimit">ssoWarnLimit</attribute>
+			<attribute alias="verifyCycle">ssoVerifyCycle</attribute>
+			<attribute alias="verifyPoint">ssoVerifyPoint</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+	</select>
+
+	<select id="getMailServer" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.audit.vo.MailVO">
+		<base>ou=mailserver,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoMailServer)(cn=MSVR0001))</filter>
+		<attributes>
+			<attribute alias="smtpHost">ssoSmtpHost</attribute>
+			<attribute alias="smtpPort">ssoSmtpPort</attribute>
+			<attribute alias="smtpChnl">ssoSmtpChanl</attribute>
+			<attribute alias="smtpAuth">ssoSmtpAuth</attribute>
+			<attribute alias="authId">ssoAuthId</attribute>
+			<attribute alias="authPw">ssoAuthPw</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+	</select>
+
+	<select id="getMailSend" parameterClass="java.util.HashMap" resultClass="com.dreamsecurity.sso.server.api.audit.vo.MailVO">
+		<base>ou=mailsend,ou=dreamsso,dc=my-domain,dc=com</base>
+		<filter>(&amp;(objectclass=ssoMailSend)(cn=#code#))</filter>
+		<attributes>
+			<attribute alias="referrer">ssoMailReferrer</attribute>
+			<attribute alias="subject">ssoMailSubject</attribute>
+			<attribute alias="content">ssoMailBody</attribute>
+		</attributes>
+		<search-scope>ONE</search-scope>
+	</select>
+
+
+	<!-- attribute의 action은 ADD/REPLACE/DELETE 중 하나 -->
+	<update id="setAupyInfo" parameterClass="java.util.HashMap">
+		<base>cn=AUPY0001,ou=auditpolicy,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="warnLimit">ssoWarnLimit</attribute>
+			<attribute action="REPLACE" alias="verifyCycle">ssoVerifyCycle</attribute>
+			<attribute action="REPLACE" alias="verifyPoint">ssoVerifyPoint</attribute>
+		</attributes>
+	</update>
+
+	<update id="setVerifyTimeAupy" parameterClass="java.util.HashMap">
+		<base>cn=AUPY0001,ou=auditpolicy,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="verifyTime">ssoVerifyTime</attribute>
+		</attributes>
+	</update>
+
+	<update id="setMailServer" parameterClass="java.util.HashMap">
+		<base>cn=MSVR0001,ou=mailserver,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="smtpHost">ssoSmtpHost</attribute>
+			<attribute action="REPLACE" alias="smtpPort">ssoSmtpPort</attribute>
+			<attribute action="REPLACE" alias="smtpChnl">ssoSmtpChanl</attribute>
+			<attribute action="REPLACE" alias="smtpAuth">ssoSmtpAuth</attribute>
+			<attribute action="REPLACE" alias="authId">ssoAuthId</attribute>
+			<attribute action="REPLACE" alias="authPw">ssoAuthPw</attribute>
+		</attributes>
+	</update>
+
+	<update id="setMailSend" parameterClass="java.util.HashMap">
+		<base>cn=#code#,ou=mailsend,ou=dreamsso,dc=my-domain,dc=com</base>
+		<attributes>
+			<attribute action="REPLACE" alias="referrer">ssoMailReferrer</attribute>
+			<attribute action="REPLACE" alias="subject">ssoMailSubject</attribute>
+			<attribute action="REPLACE" alias="content">ssoMailBody</attribute>
+		</attributes>
+	</update>
+
+</queryMap>

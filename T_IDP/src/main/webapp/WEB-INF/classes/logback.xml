@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOGS_ABSOLUTE_PATH" value="C:/Users/stella/Desktop/Sample/T_IDP/src/main/webapp/WEB-INF/logs"/>
+
+    <appender name="STDOUT" class="com.dreamsecurity.sso.lib.lcr.ConsoleAppender">
+        <layout class="com.dreamsecurity.sso.lib.lcs.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="SSO_ROLLING" class="com.dreamsecurity.sso.lib.lcr.rolling.RollingFileAppender">
+        <file>${LOGS_ABSOLUTE_PATH}/ssoserver.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="com.dreamsecurity.sso.lib.lcr.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS_ABSOLUTE_PATH}/ssoserver_%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.dreamsecurity.sso.server" level="DEBUG">
+        <appender-ref ref="SSO_ROLLING"/>
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
