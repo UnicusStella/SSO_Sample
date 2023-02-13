@@ -1,6 +1,6 @@
 @echo off
 
-set JAV_PATH="C:\Program Files\Java\jre1.8.0_351\bin"
+set JAV_PATH="C:\Program Files\Java\jre1.8.0_361\bin"
 set CAT_PATH=C:\Users\stella\Desktop\Directory\(WAS)_Tomcat\lib
 set SSO_PATH=C:\Users\stella\Desktop\Sample\T_SP2\src\main\webapp\WEB-INF\lib
 set SSS=C:\Users\stella\Desktop\Sample\T_SP2\build\classes

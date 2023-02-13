@@ -1,3 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
+    <server>
+        <name>T_SP1</name>
+        <code>f5b5831bf19bb01ea450099a35688623b8c035b02209ffad8b80906f74722fa03421e2721a24c8a7fa9c6f3874ea6f19</code>
+        <block>2e9ebc7a817fcb8977312038c3b968d3</block>
+    </server>
+    <sso>
+        <homepath>29da65382905cb95bbc9f40c13c89f20</homepath>
+    </sso>
+    <cert>
+        <keycode>29905590d6acee6077ca3a711e715ca3</keycode>
+        <signcode>29905590d6acee6077ca3a711e715ca3</signcode>
+    </cert>
 </configuration>

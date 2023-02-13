@@ -1,3 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuration>
+    <server>
+        <name>T_IDP</name>
+        <code>0697f556314d8f615378cd8b19ac2f221730968f1c19aa45fb98ef119373ee1e41f5eff95167cd02a1c4feccbf81a5fc</code>
+        <block>d11438399ac2d12be401fb96d4fbc1df</block>
+    </server>
+    <sso>
+        <homepath>5be6853bf4cc1aa54be0584f02d1445d</homepath>
+    </sso>
+    <cert>
+        <keycode>09ca1d8de9fb15cbf49f2908fc145a30</keycode>
+        <signcode>09ca1d8de9fb15cbf49f2908fc145a30</signcode>
+    </cert>
+    <dbcp>
+        <driver>d3ec5e24f2f290b1855c9997ba4b6b99b028f12a2037b1e5d2fee075ad626067</driver>
+        <url>e89c683be868d4efeb2e3b29041d505a93f40bdf964ca3cfc3d066993144960840b2d8b1470b6eda958ba6f678568085</url>
+        <username>70c1611685e417d9800b8510b980c08e</username>
+        <password>5b21e7b1a44891ab523134fa53f19ffb</password>
+    </dbcp>
+    <token>
+        <attribute>ef95b7d8f0cbac5c7484b319da1ccc4d92f9fd1c797500dcf523059ca201901dabe512a65adae5d87a37d3e68cdcb39ffafcae7c99b24014b16a58bacbd99f49a638c7c857f0f504d248b4e38bb30e61882b86146b835fc0244b1f357399b9efca6711208c727b1ff97ce2041c6f29d2b899145b7035bb0c4935bee7df1145d80a2e57fb2a63e29ce5496a1ccdefe468bff04a9b7554d7d357de730185a2487b13cfaecd631e8ed4177ae9f775150213112b4004730a67bcab92838022378491</attribute>
+    </token>
 </configuration>
