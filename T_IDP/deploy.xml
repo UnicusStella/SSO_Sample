@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Magic SSO Server" basedir="." default="deploy">
+	<property name="build.dir" value="deploy"/>
+	<property name="deploy.dir" value="deploy"/>
+	<property name="compile.dir" value="build/classes"/>
+	<property name="WebContent.dir" value="src/main/webapp"/>
+	<property name="WEB-INF.dir" value="src/main/webapp/WEB-INF"/>
+	<property name="idp.jar.file" value="magicsso-svadd-4.0.0.3.jar"/>
+
+	<target name="clean" description="Clean output directories">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="create_jar" depends="clean" description="Create jar file">
+		<jar destfile="${build.dir}/${idp.jar.file}">
+      		<fileset dir="${compile.dir}">
+      			<include name="**"/>
+      		</fileset>
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0"/>
+			</manifest>
+    	</jar>
+	</target>
+
+	<target name="deploy" depends="create_jar" description="Deploy project files">
+		<mkdir dir="${deploy.dir}/sso"/>
+		<mkdir dir="${deploy.dir}/WEB-INF"/>
+		<mkdir dir="${deploy.dir}/WEB-INF/classes"/>
+		<mkdir dir="${deploy.dir}/WEB-INF/jsp"/>
+		<mkdir dir="${deploy.dir}/WEB-INF/lib"/>
+
+		<copy todir ="${deploy.dir}/sso">
+			<fileset dir="${WebContent.dir}/sso" includes="**"/>
+		</copy>
+		<copy todir ="${deploy.dir}/WEB-INF/classes">
+			<fileset dir="${WEB-INF.dir}/classes" includes="**"/>
+		</copy>
+		<copy todir ="${deploy.dir}/WEB-INF/jsp">
+			<fileset dir="${WEB-INF.dir}/jsp" includes="**"/>
+		</copy>
+		<copy todir ="${deploy.dir}/WEB-INF/lib">
+			<fileset dir="${WEB-INF.dir}/lib" includes="**"/>
+		</copy>
+		<copy todir ="${deploy.dir}/WEB-INF/lib">
+			<fileset dir="${deploy.dir}" includes="${idp.jar.file}"/>
+		</copy>
+		<copy todir ="${deploy.dir}/WEB-INF">
+			<fileset dir="${WEB-INF.dir}" includes="web.xml"/>
+		</copy>
+	</target>
+</project>

@@ -158,3 +158,9 @@ h2ONyQC+XVEhu0yMAGu3ELkZ98r83TXRLic+67Af/kF/1sUK6ynoW8D0oobC4VvKV8NovUN7PK+g
 10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### connect info: 192.168.0.10, 40040, 3000, 512
 10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### connect error: java.net.SocketTimeoutException: connect timed out
 10:30:42.670 [Thread-3] ERROR c.d.sso.server.dup.DupManager - ### DupManager.doprocess() Exception: java.io.IOException: server connect failed
+10:34:50.584 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Connect Test Start ...
+10:34:50.585 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Status is Good [ 1 ms.]
+10:39:53.560 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Connect Test Start ...
+10:39:53.563 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Status is Good [ 3 ms.]
+10:44:55.956 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Connect Test Start ...
+10:44:55.958 [Thread-1] INFO  c.d.s.s.r.c.DBConnectMonitor - ### default_db Status is Good [ 2 ms.]
